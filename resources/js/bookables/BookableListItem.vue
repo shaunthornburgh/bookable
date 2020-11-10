@@ -10,7 +10,7 @@
                         {{ itemTitle }}
                     </h3>
                     <p class="mt-3 text-base leading-6 text-gray-500">
-                        {{ itemContent }}
+                        {{ itemDescription }}
                     </p>
                     <p class="mt-3 text-base leading-6 text-gray-500">
                         £{{ price }} per night
@@ -50,7 +50,7 @@
     export default {
         props: {
             itemTitle: String,
-            itemContent: String,
+            itemDescription: String,
             price: Number
         },
         mounted() {

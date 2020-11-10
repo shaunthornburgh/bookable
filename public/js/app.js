@@ -1959,7 +1959,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     itemTitle: String,
-    itemContent: String,
+    itemDescription: String,
     price: Number
   },
   mounted: function mounted() {}
@@ -2011,31 +2011,10 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.loading = true;
-    setTimeout(function () {
-      _this.bookables = [{
-        title: "Cheap Villa",
-        content: "A very cheap villa"
-      }, _this.bookables = {
-        title: "Cheap Villa 2",
-        content: "A very cheap villa 2"
-      }, _this.bookables = {
-        title: "Cheap Villa 3",
-        content: "A very cheap villa 3"
-      }, _this.bookables = {
-        title: "Cheap Villa 4",
-        content: "A very cheap villa 4"
-      }, _this.bookables = {
-        title: "Cheap Villa 5",
-        content: "A very cheap villa 5"
-      }, _this.bookables = {
-        title: "Cheap Villa 6",
-        content: "A very cheap villa 6"
-      }, _this.bookables = {
-        title: "Cheap Villa 7",
-        content: "A very cheap villa 7"
-      }];
+    var request = axios.get('/api/bookables').then(function (response) {
+      _this.bookables = response.data;
       _this.loading = false;
-    }, 2000);
+    });
   }
 });
 
@@ -20267,7 +20246,7 @@ var render = function() {
                 [
                   _vm._v(
                     "\n                    " +
-                      _vm._s(_vm.itemContent) +
+                      _vm._s(_vm.itemDescription) +
                       "\n                "
                   )
                 ]
@@ -20393,7 +20372,7 @@ var render = function() {
                 key: index,
                 attrs: {
                   "item-title": bookable.title,
-                  "item-content": bookable.content,
+                  "item-description": bookable.description,
                   price: 1000
                 }
               })
