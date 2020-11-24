@@ -6,9 +6,7 @@
         <div v-else>
             <div class="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
                 <bookable-list-item
-                    :item-title="bookable.title"
-                    :item-description="bookable.description"
-                    :price="1000"
+                    v-bind="bookable"
                     v-for="(bookable, index) in bookables"
                     :key="index"
                 ></bookable-list-item>

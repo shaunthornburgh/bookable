@@ -5,17 +5,17 @@
         </div>
         <div class="flex-1 bg-white p-6 flex flex-col justify-between">
             <div class="flex-1">
-                <a href="#" class="block">
+                <router-link :to="{ name: 'bookable', params: { id } }" class="block">
                     <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">
-                        {{ itemTitle }}
+                        {{ title }}
                     </h3>
                     <p class="mt-3 text-base leading-6 text-gray-500">
-                        {{ itemDescription }}
+                        {{ description }}
                     </p>
                     <p class="mt-3 text-base leading-6 text-gray-500">
                         £{{ price }} per night
                     </p>
-                </a>
+                </router-link>
             </div>
             <div class="mt-6 flex items-center">
                 <div class="flex-shrink-0">
@@ -49,9 +49,10 @@
 <script>
     export default {
         props: {
-            itemTitle: String,
-            itemDescription: String,
-            price: Number
+            title: String,
+            description: String,
+            price: 1000,
+            id: Number,
         },
         mounted() {
 
