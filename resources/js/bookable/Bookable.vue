@@ -21,9 +21,9 @@
             <div v-else>Loading ...</div>
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Availability & Prices</h3>
                     <p class="mt-1 text-sm text-gray-600">
-                        Decide which communications you'd like to receive and how.
+                        Todo...
                     </p>
                 </div>
             </div>
@@ -44,7 +44,7 @@
             axios
                 .get(`/api/bookables/${this.$route.params.id}`)
                 .then(response => {
-                    this.bookable = response.data;
+                    this.bookable = response.data.data;
                     this.loading = false;
                 });
         }

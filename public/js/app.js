@@ -1953,7 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loading = true;
     axios.get("/api/bookables/".concat(this.$route.params.id)).then(function (response) {
-      _this.bookable = response.data;
+      _this.bookable = response.data.data;
       _this.loading = false;
     });
   }
@@ -2073,7 +2073,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loading = true;
     var request = axios.get('/api/bookables').then(function (response) {
-      _this.bookables = response.data;
+      _this.bookables = response.data.data;
       _this.loading = false;
     });
   }
@@ -20266,13 +20266,11 @@ var staticRenderFns = [
         _c(
           "h3",
           { staticClass: "text-lg font-medium leading-6 text-gray-900" },
-          [_vm._v("Notifications")]
+          [_vm._v("Availability & Prices")]
         ),
         _vm._v(" "),
         _c("p", { staticClass: "mt-1 text-sm text-gray-600" }, [
-          _vm._v(
-            "\n                    Decide which communications you'd like to receive and how.\n                "
-          )
+          _vm._v("\n                    Todo...\n                ")
         ])
       ])
     ])
