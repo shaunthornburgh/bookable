@@ -12,7 +12,9 @@ const mix = require('laravel-mix');
  */
 
 mix
+  .setResourceRoot("")
   .js('resources/js/app.js', 'public/js')
+  .copyDirectory('resources/images', 'public/images')
   .postCss('resources/css/app.css', 'public/css', [
     require('postcss-import'),
     require('tailwindcss'),

@@ -12,7 +12,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="antialiased">
-        <div id="app">
+        <div id="app" class="wrapper">
             <index></index>
         </div>
     </body>

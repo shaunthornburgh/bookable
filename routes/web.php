@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/{all}', function () {
-    return view('welcome');
+    return view('index');
 })->where('all', '^(?!api\/)[\/\w\.-]*');
 
