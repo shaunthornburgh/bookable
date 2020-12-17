@@ -1985,16 +1985,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       from: null,
-      to: null
+      to: null,
+      loading: false,
+      status: null,
+      errors: null
     };
   },
   methods: {
     check: function check() {
-      alert('I will do something now!');
+      var _this = this;
+
+      this.loading = true;
+      this.errors = null;
+      axios.get("/api/bookables/".concat(this.$route.params.id, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
+        _this.status = response.status;
+      })["catch"](function (error) {
+        if (422 === error.response.status) {
+          _this.errors = error.response.data.errors;
+        }
+
+        _this.status = error.response.status;
+      }).then(function () {
+        return _this.loading = false;
+      });
+    },
+    errorFor: function errorFor(field) {
+      return this.hasErrors && this.errors[field] ? this.errors[field] : null;
+    }
+  },
+  computed: {
+    hasErrors: function hasErrors() {
+      return 422 === this.status && this.errors !== null;
+    },
+    hasAvailability: function hasAvailability() {
+      return 200 === this.status;
+    },
+    noAvailability: function noAvailability() {
+      return 400 === this.status;
     }
   }
 });
@@ -20760,91 +20802,127 @@ var render = function() {
       _vm._v(" "),
       _c("form", { attrs: { action: "#", method: "get" } }, [
         _c("div", { staticClass: "flex mb-4" }, [
-          _c("div", { staticClass: "flex flex-col w-6/12 pr-1.5" }, [
-            _c(
-              "label",
-              {
-                staticClass: "uppercase font-semibold text-xs mb-2",
-                staticStyle: { color: "gray" },
-                attrs: { for: "date-from" }
-              },
-              [_vm._v("from")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+          _c(
+            "div",
+            { staticClass: "flex flex-col w-6/12 pr-1.5" },
+            [
+              _c(
+                "label",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.from,
-                  expression: "from"
-                }
-              ],
-              staticClass: "border rounded pl-2 pt-1 pb-1",
-              attrs: { id: "date-from", type: "date", name: "date-from" },
-              domProps: { value: _vm.from },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.check($event)
+                  staticClass: "uppercase font-semibold text-xs mb-2",
+                  staticStyle: { color: "gray" },
+                  attrs: { for: "date-from" }
                 },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                [_vm._v("from")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.from,
+                    expression: "from"
                   }
-                  _vm.from = $event.target.value
+                ],
+                staticClass: "border rounded pl-2 pt-1 pb-1",
+                class: [{ "border-red-500": this.errorFor("from") }],
+                attrs: { id: "date-from", type: "date", name: "date-from" },
+                domProps: { value: _vm.from },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.check($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.from = $event.target.value
+                  }
                 }
-              }
-            })
-          ]),
+              }),
+              _vm._v(" "),
+              _vm._l(this.errorFor("from"), function(error, index) {
+                return _c(
+                  "span",
+                  {
+                    key: "from" + index,
+                    staticClass:
+                      "flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
+                  },
+                  [_vm._v(_vm._s(error))]
+                )
+              })
+            ],
+            2
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "flex flex-col w-6/12 pl-1.5" }, [
-            _c(
-              "label",
-              {
-                staticClass: "uppercase font-semibold text-xs mb-2",
-                staticStyle: { color: "gray" },
-                attrs: { for: "date-to" }
-              },
-              [_vm._v("to")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+          _c(
+            "div",
+            { staticClass: "flex flex-col w-6/12 pl-1.5" },
+            [
+              _c(
+                "label",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.to,
-                  expression: "to"
-                }
-              ],
-              staticClass: "border rounded pl-2 pt-1 pb-1",
-              attrs: { id: "date-to", type: "date", name: "date-to" },
-              domProps: { value: _vm.to },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.check($event)
+                  staticClass: "uppercase font-semibold text-xs mb-2",
+                  staticStyle: { color: "gray" },
+                  attrs: { for: "date-to" }
                 },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                [_vm._v("to")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.to,
+                    expression: "to"
                   }
-                  _vm.to = $event.target.value
+                ],
+                staticClass: "border rounded pl-2 pt-1 pb-1",
+                class: [{ "border-red-500": this.errorFor("to") }],
+                attrs: { id: "date-to", type: "date", name: "date-to" },
+                domProps: { value: _vm.to },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.check($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.to = $event.target.value
+                  }
                 }
-              }
-            })
-          ])
+              }),
+              _vm._v(" "),
+              _vm._l(this.errorFor("to"), function(error, index) {
+                return _c(
+                  "span",
+                  {
+                    key: "to" + index,
+                    staticClass:
+                      "flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
+                  },
+                  [_vm._v(_vm._s(error))]
+                )
+              })
+            ],
+            2
+          )
         ]),
         _vm._v(" "),
         _c(
@@ -20852,7 +20930,7 @@ var render = function() {
           {
             staticClass:
               "inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full",
-            attrs: { type: "submit" },
+            attrs: { type: "submit", disabled: _vm.loading },
             on: { click: _vm.check }
           },
           [_vm._v("\n            Check availability\n        ")]
