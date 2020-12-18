@@ -1,6 +1,10 @@
 <template>
     <div class="sm:pl-3 sm:order-none order-first mb-7 sm:mb-0">
-        <div class="mb-3 font-semibold" style="color: gray">Check availability</div>
+        <div class="mb-3 font-semibold" style="color: gray">
+            Check Availability
+            <span v-if="noAvailability" class="text-red-500"> - Not Available</span>
+            <span v-if="hasAvailability" class="text-green-500"> - Available</span>
+        </div>
         <form action="#" method="get">
             <div class="flex mb-4">
                 <div class="flex flex-col w-6/12 pr-1.5">
@@ -96,7 +100,7 @@
                 return 200 === this.status;
             },
             noAvailability() {
-                return 400 === this.status;
+                return 404 === this.status;
             }
         }
     };
