@@ -13,10 +13,10 @@
                         </div>
                     </div>
                 </div>
-                <reviewlist></reviewlist>
+                <reviewlist :bookable-id="this.$route.params.id"></reviewlist>
             </div>
             <div class="md:col-span-1">
-                <availability></availability>
+                <availability :bookable-id="this.$route.params.id"></availability>
             </div>
         </div>
     </div>

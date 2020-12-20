@@ -1,8 +1,9 @@
 <template>
     <div class="pl-4 pr-4 sm:pr-8">
         <div class="mb-7 font-semibold" style="color: gray;">Reviews</div>
-        <div>
-            <div class="mb-8 pb-8" style="border-bottom: 1px solid lightgray;" v-for="number in 3" :key="number">
+        <div v-if="loading">Loading</div>
+        <div v-else>
+            <div class="mb-8 pb-8" style="border-bottom: 1px solid lightgray;" v-for="(review, index) in reviews" :key="index">
                 <div class="flex justify-between">
                     <div>Piotr Jura</div>
                     <div class="flex">
@@ -33,9 +34,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-7 text-sm">a day ago</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, cum cupiditate ea explicabo fugit inventore ipsa iure laudantium natus nesciunt nihil, quod saepe sapiente sequi veritatis, voluptates voluptatum? Eaque, possimus!</p>
+                <div class="mb-7 text-sm">{{ review.created_at }}</div>
+                <p>{{ review.content }}</p>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+    export default {
+        props: {
+            bookableId: String,
+        },
+        data() {
+            return {
+                loading: false,
+                reviews: null
+            }
+        },
+        created() {
+            this.loading = true;
+            axios
+                .get(`/api/bookables/${this.bookableId}/reviews`)
+                .then(response => this.reviews = response.data.data)
+                .then(() => this.loading = false);
+        }
+    }
+</script>
