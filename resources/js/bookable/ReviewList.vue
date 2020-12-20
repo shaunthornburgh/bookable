@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-7 text-sm">{{ review.created_at }}</div>
+                <div class="mb-7 text-sm">{{ review.created_at | fromNow }}</div>
                 <p>{{ review.content }}</p>
             </div>
         </div>
