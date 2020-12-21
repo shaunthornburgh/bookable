@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('path');
-            $table->boolean('is_primary');
+            $table->boolean('is_primary')->default(false);
             $table->unsignedBigInteger('bookable_id')->index();
             $table->foreign('bookable_id')->references('id')->on('bookables');
         });

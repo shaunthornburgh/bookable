@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <gallery></gallery>
+        <gallery :bookable-id="this.$route.params.id"></gallery>
         <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col">
             <div class="col-start-1 col-end-3 w-full">
                 <div class="mb-8">
@@ -25,7 +25,7 @@
 
 <script>
     import Availability from "./Availability";
-    import Gallery from "./Gallery";
+    import Gallery from "./gallery/Gallery";
     import Reviewlist from "./ReviewList";
 
     export default {

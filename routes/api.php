@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\BookableAvailabilityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Bookable;
 use App\Http\Controllers\Api\BookableController;
 use App\Http\Controllers\Api\BookableReviewController;
+use App\Http\Controllers\Api\BookableImageController;
+use App\Http\Controllers\Api\BookableAvailabilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +36,6 @@ Route::get('bookables/{bookable}/availability', BookableAvailabilityController::
     ->name('bookables.availability.show');
 Route::get('bookables/{bookable}/reviews', BookableReviewController::class)
     ->name('bookables.reviews.index');
+Route::get('bookables/{bookable}/images', BookableImageController::class)
+    ->name('bookables.images.index');
+
