@@ -25,7 +25,7 @@
 
 <script>
     import Availability from "./Availability";
-    import Gallery from "./gallery/Gallery";
+    import Gallery from "./Gallery";
     import Reviewlist from "./ReviewList";
 
     export default {

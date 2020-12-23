@@ -22,7 +22,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'path' => "images/bookable/".rand(1, 3).".jpeg",
+            'path' => "/images/bookable/".rand(1, 3).".jpeg",
         ];
     }
 }

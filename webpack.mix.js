@@ -12,17 +12,19 @@ const mix = require('laravel-mix');
  */
 
 mix
-  .setResourceRoot("")
-  .js('resources/js/app.js', 'public/js')
-  .copyDirectory('resources/images', 'public/images')
-  .postCss('resources/css/app.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('postcss-nested'),
-    require('autoprefixer'),
-  ]);
+    .setResourceRoot("")
+    .js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+    .options({
+        postCss: [
+            require('postcss-import'),
+            require('tailwindcss'),
+        ]
+    })
+    .copyDirectory('resources/images', 'public/images')
+
 
 if (mix.inProduction()) {
-  mix
-    .version();
+    mix
+        .version();
 }
