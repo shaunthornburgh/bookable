@@ -43533,6 +43533,292 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/review/Review.vue?vue&type=template&id=06d06501&":
+/*!*****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/review/Review.vue?vue&type=template&id=06d06501& ***!
+  \*****************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass:
+          "mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3"
+      },
+      [
+        _c("div", { staticClass: "space-y-6 lg:col-start-1 lg:col-span-2" }, [
+          _c("section", { attrs: { "aria-labelledby": "review-title" } }, [
+            _c("div", { staticClass: "bg-white shadow sm:rounded-lg" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "border-t border-gray-200 px-4 py-5 sm:px-6" },
+                [
+                  _c(
+                    "form",
+                    { staticClass: "space-y-8 divide-y divide-gray-200" },
+                    [
+                      _c(
+                        "dl",
+                        {
+                          staticClass:
+                            "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2"
+                        },
+                        [
+                          _c("div", { staticClass: "sm:col-span-6" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass:
+                                  "block text-sm font-medium text-gray-700",
+                                attrs: { for: "about" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                        Stars\n                                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "mt-1" },
+                              [_c("star-rating", { attrs: { rating: 5 } })],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "mt-2 text-sm text-gray-500" },
+                              [
+                                _vm._v(
+                                  "How many stars would you give out of 5?"
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(3)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
+      _c(
+        "h2",
+        {
+          staticClass: "text-lg leading-6 font-medium text-gray-900",
+          attrs: { id: "review-title" }
+        },
+        [
+          _vm._v(
+            "\n                            Review\n                        "
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "mt-1 max-w-2xl text-sm text-gray-500" }, [
+        _vm._v(
+          "\n                            Add a review for your host\n                        "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sm:col-span-6" }, [
+      _c(
+        "label",
+        {
+          staticClass: "block text-sm font-medium text-gray-700",
+          attrs: { for: "about" }
+        },
+        [
+          _vm._v(
+            "\n                                        Review content\n                                    "
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "mt-1" }, [
+        _c("textarea", {
+          staticClass:
+            "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+          attrs: { id: "about", name: "about", rows: "3" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "mt-2 text-sm text-gray-500" }, [
+        _vm._v("Write a few sentences about your stay with [insert host name].")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "border-t border-gray-200 px-4 py-5 sm:px-6 text-right" },
+      [
+        _c(
+          "button",
+          {
+            staticClass:
+              "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+            attrs: { type: "submit" }
+          },
+          [
+            _vm._v(
+              "\n                            Submit review\n                        "
+            )
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "section",
+      {
+        staticClass: "lg:col-start-3 lg:col-span-1",
+        attrs: { "aria-labelledby": "bookable-details-title" }
+      },
+      [
+        _c("div", { staticClass: "bg-white shadow sm:rounded-lg" }, [
+          _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
+            _c(
+              "h2",
+              {
+                staticClass: "text-lg leading-6 font-medium text-gray-900",
+                attrs: { id: "bookable-details-title" }
+              },
+              [
+                _vm._v(
+                  "\n                        Your stay\n                    "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "mt-1 max-w-2xl text-sm text-gray-500" }, [
+              _vm._v(
+                "\n                        Your review is only in relation to this rental\n                    "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "border-t border-gray-200 px-4 py-5 sm:px-6" },
+            [
+              _c(
+                "dl",
+                {
+                  staticClass: "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-1"
+                },
+                [
+                  _c("div", { staticClass: "sm:col-span-1" }, [
+                    _c(
+                      "dt",
+                      { staticClass: "text-sm font-medium text-gray-500" },
+                      [
+                        _vm._v(
+                          "\n                                Dates\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
+                      _vm._v(
+                        "\n                                [INSERT BOOKABLE DATES]\n                            "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "sm:col-span-1" }, [
+                    _c(
+                      "dt",
+                      { staticClass: "text-sm font-medium text-gray-500" },
+                      [
+                        _vm._v(
+                          "\n                                Property\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
+                      _vm._v(
+                        "\n                                [INSERT PROPERTY NAME]\n                            "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "sm:col-span-1" }, [
+                    _c(
+                      "dt",
+                      { staticClass: "text-sm font-medium text-gray-500" },
+                      [
+                        _vm._v(
+                          "\n                                Host\n                            "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
+                      _vm._v(
+                        "\n                                [INSERT HOST NAME]\n                            "
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/StarRating.vue?vue&type=template&id=2679dcc8&":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/components/StarRating.vue?vue&type=template&id=2679dcc8& ***!
@@ -59610,6 +59896,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/review/Review.vue":
+/*!****************************************!*\
+  !*** ./resources/js/review/Review.vue ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Review_vue_vue_type_template_id_06d06501___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Review.vue?vue&type=template&id=06d06501& */ "./resources/js/review/Review.vue?vue&type=template&id=06d06501&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _Review_vue_vue_type_template_id_06d06501___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Review_vue_vue_type_template_id_06d06501___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/review/Review.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/review/Review.vue?vue&type=template&id=06d06501&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/review/Review.vue?vue&type=template&id=06d06501& ***!
+  \***********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_template_id_06d06501___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Review.vue?vue&type=template&id=06d06501& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/review/Review.vue?vue&type=template&id=06d06501&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_template_id_06d06501___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Review_vue_vue_type_template_id_06d06501___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -59623,6 +59962,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bookables_Bookables__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bookables/Bookables */ "./resources/js/bookables/Bookables.vue");
 /* harmony import */ var _bookable_Bookable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./bookable/Bookable */ "./resources/js/bookable/Bookable.vue");
 /* harmony import */ var _bookable_Media__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./bookable/Media */ "./resources/js/bookable/Media.vue");
+/* harmony import */ var _review_Review__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./review/Review */ "./resources/js/review/Review.vue");
+
 
 
 
@@ -59639,6 +59980,10 @@ var routes = [{
   path: "/bookable/:id/media",
   component: _bookable_Media__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: "media"
+}, {
+  path: "/review/:id",
+  component: _review_Review__WEBPACK_IMPORTED_MODULE_4__["default"],
+  name: "review"
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes,
