@@ -21,7 +21,7 @@
                                             Stars
                                         </label>
                                         <div class="mt-1">
-                                            <star-rating :rating="5"></star-rating>
+                                            <star-rating :rating="review.rating" v-on:rating:changed="review.rating = $event"></star-rating>
                                         </div>
                                         <p class="mt-2 text-sm text-gray-500">How many stars would you give out of 5?</p>
                                     </div>
@@ -89,3 +89,21 @@
         </div>
     </div>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                review: {
+                    rating: 5,
+                    content: null
+                }
+            };
+        }
+        // methods: {
+        //   onRatingChanged(rating) {
+        //     console.log(rating);
+        //   }
+        // }
+    };
+</script>

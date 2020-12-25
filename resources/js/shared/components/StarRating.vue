@@ -1,13 +1,13 @@
 <template>
     <div class="flex">
         <div class="w-6 text-2xl" v-for="star in fullStars" :key="'full' + star">
-            <i class="fas fa-star"></i>
+            <i class="fas fa-star" @click="$emit('rating:changed', star)"></i>
         </div>
         <div class="w-6 text-2xl" v-if="halfStar">
             <i class="fas fa-star-half-alt"></i>
         </div>
         <div class="w-6 text-2xl" v-for="star in emptyStars" :key="'empty' + star">
-            <i class="far fa-star"></i>
+            <i class="far fa-star" @click="$emit('rating:changed', fullStars + star)"></i>
         </div>
     </div>
 </template>
