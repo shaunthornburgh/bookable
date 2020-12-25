@@ -21,7 +21,7 @@
                                             Stars
                                         </label>
                                         <div class="mt-1">
-                                            <star-rating :rating="review.rating" v-on:rating:changed="review.rating = $event"></star-rating>
+                                            <star-rating v-model="review.rating"></star-rating>
                                         </div>
                                         <p class="mt-2 text-sm text-gray-500">How many stars would you give out of 5?</p>
                                     </div>
@@ -30,7 +30,13 @@
                                             Review content
                                         </label>
                                         <div class="mt-1">
-                                            <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                                            <textarea
+                                                id="about"
+                                                name="about"
+                                                rows="3"
+                                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                v-model="review.content"
+                                            ></textarea>
                                         </div>
                                         <p class="mt-2 text-sm text-gray-500">Write a few sentences about your stay with [insert host name].</p>
                                     </div>
@@ -99,11 +105,11 @@
                     content: null
                 }
             };
+        },
+        created() {
+            // 1. If review already exists (in reviews table by id)
+            // 2. Fetch a booking by a review key
+            // 3. Store the review
         }
-        // methods: {
-        //   onRatingChanged(rating) {
-        //     console.log(rating);
-        //   }
-        // }
     };
 </script>

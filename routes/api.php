@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\BookableController;
 use App\Http\Controllers\Api\BookableReviewController;
 use App\Http\Controllers\Api\BookableImageController;
 use App\Http\Controllers\Api\BookableAvailabilityController;
+use App\Http\Controllers\Api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,6 @@ Route::get('bookables/{bookable}/reviews', BookableReviewController::class)
     ->name('bookables.reviews.index');
 Route::get('bookables/{bookable}/images', BookableImageController::class)
     ->name('bookables.images.index');
+
+Route::apiResource('reviews', ReviewController::class)->only(['show']);
 

@@ -6,7 +6,7 @@
             <div class="mb-8 pb-8" style="border-bottom: 1px solid lightgray;" v-for="(review, index) in reviews" :key="index">
                 <div class="flex justify-between">
                     <div>Piotr Jura</div>
-                    <star-rating :rating="review.rating"></star-rating>
+                    <star-rating :value="review.rating"></star-rating>
                 </div>
                 <div class="mb-7 text-sm">{{ review.created_at | fromNow }}</div>
                 <p>{{ review.content }}</p>
