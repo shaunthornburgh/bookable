@@ -2085,8 +2085,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -42687,28 +42685,32 @@ var render = function() {
                 "div",
                 { staticClass: "col-start-1 col-end-3 w-full" },
                 [
-                  _c("div", { staticClass: "mb-8" }, [
-                    _c("div", { staticClass: "p-4 border rounded shadow-sm" }, [
+                  _c(
+                    "div",
+                    { staticClass: "bg-white shadow sm:rounded-lg mb-7" },
+                    [
+                      _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
+                        _c(
+                          "h2",
+                          {
+                            staticClass:
+                              "text-lg leading-6 font-medium text-gray-900",
+                            attrs: { id: "bookable-details-title" }
+                          },
+                          [_vm._v(_vm._s(_vm.bookable.title))]
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "div",
                         {
-                          staticClass: "pb-5",
-                          staticStyle: {
-                            "border-bottom": "1px solid lightgray"
-                          }
+                          staticClass:
+                            "border-t border-gray-200 px-4 py-5 sm:px-6"
                         },
-                        [
-                          _c("h1", { staticClass: "text-3xl font-semibold" }, [
-                            _vm._v(_vm._s(_vm.bookable.title))
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "pt-5" }, [
-                        _c("p", [_vm._v(_vm._s(_vm.bookable.description))])
-                      ])
-                    ])
-                  ]),
+                        [_c("p", [_vm._v(_vm._s(_vm.bookable.description))])]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("reviewlist", {
                     attrs: { "bookable-id": this.$route.params.id }

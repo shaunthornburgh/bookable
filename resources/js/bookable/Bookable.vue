@@ -3,14 +3,12 @@
         <gallery :bookable-id="this.$route.params.id"></gallery>
         <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col">
             <div class="col-start-1 col-end-3 w-full">
-                <div class="mb-8">
-                    <div class="p-4 border rounded shadow-sm">
-                        <div class="pb-5" style="border-bottom: 1px solid lightgray">
-                            <h1 class="text-3xl font-semibold">{{ bookable.title }}</h1>
-                        </div>
-                        <div class="pt-5">
-                            <p>{{ bookable.description }}</p>
-                        </div>
+                <div class="bg-white shadow sm:rounded-lg mb-7">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h2 id="bookable-details-title" class="text-lg leading-6 font-medium text-gray-900">{{ bookable.title }}</h2>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                        <p>{{ bookable.description }}</p>
                     </div>
                 </div>
                 <reviewlist :bookable-id="this.$route.params.id"></reviewlist>
