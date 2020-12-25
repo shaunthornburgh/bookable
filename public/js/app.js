@@ -2639,20 +2639,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       review: {
         rating: 5,
         content: null
-      }
+      },
+      existingReview: null,
+      loading: false
     };
-  } // methods: {
-  //   onRatingChanged(rating) {
-  //     console.log(rating);
-  //   }
-  // }
+  },
+  created: function created() {
+    var _this = this;
 
+    this.loading = true;
+    axios.get("/api/reviews/".concat(this.$route.params.id)).then(function (response) {
+      return _this.existingReview = response.data.data;
+    })["catch"](function (err) {//
+    }).then(function () {
+      return _this.loading = false;
+    });
+  },
+  computed: {
+    alreadyReviewed: function alreadyReviewed() {
+      return this.existingReview !== null;
+    }
+  }
 });
 
 /***/ }),
@@ -43670,95 +43715,265 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass:
-          "mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3"
-      },
-      [
-        _c("div", { staticClass: "space-y-6 lg:col-start-1 lg:col-span-2" }, [
-          _c("section", { attrs: { "aria-labelledby": "review-title" } }, [
-            _c("div", { staticClass: "bg-white shadow sm:rounded-lg" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "border-t border-gray-200 px-4 py-5 sm:px-6" },
-                [
-                  _c(
-                    "form",
-                    { staticClass: "space-y-8 divide-y divide-gray-200" },
-                    [
+    _vm.loading
+      ? _c("div", [_vm._v("Loading...")])
+      : _c("div", [
+          _vm.alreadyReviewed
+            ? _c("div", [
+                _c("div", { staticClass: "rounded-md bg-yellow-50 p-4" }, [
+                  _c("div", { staticClass: "flex" }, [
+                    _c("div", { staticClass: "flex-shrink-0" }, [
                       _c(
-                        "dl",
+                        "svg",
                         {
-                          staticClass:
-                            "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2"
+                          staticClass: "h-5 w-5 text-yellow-400",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 20 20",
+                            fill: "currentColor",
+                            "aria-hidden": "true"
+                          }
                         },
                         [
-                          _c("div", { staticClass: "sm:col-span-6" }, [
-                            _c(
-                              "label",
-                              {
-                                staticClass:
-                                  "block text-sm font-medium text-gray-700",
-                                attrs: { for: "about" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                        Stars\n                                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "mt-1" },
-                              [
-                                _c("star-rating", {
-                                  model: {
-                                    value: _vm.review.rating,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.review, "rating", $$v)
-                                    },
-                                    expression: "review.rating"
-                                  }
-                                })
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "mt-2 text-sm text-gray-500" },
-                              [
-                                _vm._v(
-                                  "How many stars would you give out of 5?"
-                                )
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(1)
+                          _c("path", {
+                            attrs: {
+                              "fill-rule": "evenodd",
+                              d:
+                                "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
+                              "clip-rule": "evenodd"
+                            }
+                          })
                         ]
                       )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm._m(2)
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._m(3)
-      ]
-    )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ])
+                ])
+              ])
+            : _c("div", [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3"
+                  },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "space-y-6 lg:col-start-1 lg:col-span-2" },
+                      [
+                        _c(
+                          "section",
+                          { attrs: { "aria-labelledby": "review-title" } },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "bg-white shadow sm:rounded-lg" },
+                              [
+                                _vm._m(1),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "border-t border-gray-200 px-4 py-5 sm:px-6"
+                                  },
+                                  [
+                                    _c(
+                                      "form",
+                                      {
+                                        staticClass:
+                                          "space-y-8 divide-y divide-gray-200"
+                                      },
+                                      [
+                                        _c(
+                                          "dl",
+                                          {
+                                            staticClass:
+                                              "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2"
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "sm:col-span-6" },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "about" }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                Stars\n                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "mt-1" },
+                                                  [
+                                                    _c("star-rating", {
+                                                      model: {
+                                                        value:
+                                                          _vm.review.rating,
+                                                        callback: function(
+                                                          $$v
+                                                        ) {
+                                                          _vm.$set(
+                                                            _vm.review,
+                                                            "rating",
+                                                            $$v
+                                                          )
+                                                        },
+                                                        expression:
+                                                          "review.rating"
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "p",
+                                                  {
+                                                    staticClass:
+                                                      "mt-2 text-sm text-gray-500"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "How many stars would you give out of 5?"
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "sm:col-span-6" },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "about" }
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                Review content\n                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "mt-1" },
+                                                  [
+                                                    _c("textarea", {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value:
+                                                            _vm.review.content,
+                                                          expression:
+                                                            "review.content"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                                                      attrs: {
+                                                        id: "about",
+                                                        name: "about",
+                                                        rows: "3"
+                                                      },
+                                                      domProps: {
+                                                        value:
+                                                          _vm.review.content
+                                                      },
+                                                      on: {
+                                                        input: function(
+                                                          $event
+                                                        ) {
+                                                          if (
+                                                            $event.target
+                                                              .composing
+                                                          ) {
+                                                            return
+                                                          }
+                                                          _vm.$set(
+                                                            _vm.review,
+                                                            "content",
+                                                            $event.target.value
+                                                          )
+                                                        }
+                                                      }
+                                                    })
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "p",
+                                                  {
+                                                    staticClass:
+                                                      "mt-2 text-sm text-gray-500"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "Write a few sentences about your stay with [insert host name]."
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._m(2)
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(3)
+                  ]
+                )
+              ])
+        ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-3" }, [
+      _c("h3", { staticClass: "text-sm font-medium text-yellow-800" }, [
+        _vm._v(
+          "\n                            Something's up!\n                        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "mt-2 text-sm text-yellow-700" }, [
+        _c("p", [
+          _vm._v(
+            "\n                                It looks like you have already left a review for this booking.\n                            "
+          )
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -43772,46 +43987,15 @@ var staticRenderFns = [
         },
         [
           _vm._v(
-            "\n                            Review\n                        "
+            "\n                                    Review\n                                "
           )
         ]
       ),
       _vm._v(" "),
       _c("p", { staticClass: "mt-1 max-w-2xl text-sm text-gray-500" }, [
         _vm._v(
-          "\n                            Add a review for your host\n                        "
+          "\n                                    Add a review for your host\n                                "
         )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "sm:col-span-6" }, [
-      _c(
-        "label",
-        {
-          staticClass: "block text-sm font-medium text-gray-700",
-          attrs: { for: "about" }
-        },
-        [
-          _vm._v(
-            "\n                                        Review content\n                                    "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "mt-1" }, [
-        _c("textarea", {
-          staticClass:
-            "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
-          attrs: { id: "about", name: "about", rows: "3" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "mt-2 text-sm text-gray-500" }, [
-        _vm._v("Write a few sentences about your stay with [insert host name].")
       ])
     ])
   },
@@ -43832,7 +44016,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "\n                            Submit review\n                        "
+              "\n                                    Submit review\n                                "
             )
           ]
         )
@@ -43860,14 +44044,14 @@ var staticRenderFns = [
               },
               [
                 _vm._v(
-                  "\n                        Your stay\n                    "
+                  "\n                                Your stay\n                            "
                 )
               ]
             ),
             _vm._v(" "),
             _c("p", { staticClass: "mt-1 max-w-2xl text-sm text-gray-500" }, [
               _vm._v(
-                "\n                        Your review is only in relation to this rental\n                    "
+                "\n                                Your review is only in relation to this rental\n                            "
               )
             ])
           ]),
@@ -43888,14 +44072,14 @@ var staticRenderFns = [
                       { staticClass: "text-sm font-medium text-gray-500" },
                       [
                         _vm._v(
-                          "\n                                Dates\n                            "
+                          "\n                                        Dates\n                                    "
                         )
                       ]
                     ),
                     _vm._v(" "),
                     _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
                       _vm._v(
-                        "\n                                [INSERT BOOKABLE DATES]\n                            "
+                        "\n                                        [INSERT BOOKABLE DATES]\n                                    "
                       )
                     ])
                   ]),
@@ -43906,14 +44090,14 @@ var staticRenderFns = [
                       { staticClass: "text-sm font-medium text-gray-500" },
                       [
                         _vm._v(
-                          "\n                                Property\n                            "
+                          "\n                                        Property\n                                    "
                         )
                       ]
                     ),
                     _vm._v(" "),
                     _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
                       _vm._v(
-                        "\n                                [INSERT PROPERTY NAME]\n                            "
+                        "\n                                        [INSERT PROPERTY NAME]\n                                    "
                       )
                     ])
                   ]),
@@ -43924,14 +44108,14 @@ var staticRenderFns = [
                       { staticClass: "text-sm font-medium text-gray-500" },
                       [
                         _vm._v(
-                          "\n                                Host\n                            "
+                          "\n                                        Host\n                                    "
                         )
                       ]
                     ),
                     _vm._v(" "),
                     _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
                       _vm._v(
-                        "\n                                [INSERT HOST NAME]\n                            "
+                        "\n                                        [INSERT HOST NAME]\n                                    "
                       )
                     ])
                   ])
