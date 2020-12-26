@@ -2671,6 +2671,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2679,7 +2682,8 @@ __webpack_require__.r(__webpack_exports__);
         content: null
       },
       existingReview: null,
-      loading: false
+      loading: false,
+      booking: null
     };
   },
   created: function created() {
@@ -2687,15 +2691,26 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loading = true;
     axios.get("/api/reviews/".concat(this.$route.params.id)).then(function (response) {
-      return _this.existingReview = response.data.data;
-    })["catch"](function (err) {//
+      _this.existingReview = response.data.data;
+    })["catch"](function (err) {
+      if (err.response && err.response.status && 404 === err.response.status) {
+        return axios.get("/api/booking-by-review/".concat(_this.$route.params.id)).then(function (response) {
+          _this.booking = response.data.data;
+        });
+      }
     }).then(function () {
-      return _this.loading = false;
+      _this.loading = false;
     });
   },
   computed: {
     alreadyReviewed: function alreadyReviewed() {
+      return this.hasReview || !this.booking;
+    },
+    hasReview: function hasReview() {
       return this.existingReview !== null;
+    },
+    hasBooking: function hasBooking() {
+      return this.booking !== null;
     }
   }
 });
@@ -43946,7 +43961,131 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(3)
+                    _c(
+                      "section",
+                      {
+                        staticClass: "lg:col-start-3 lg:col-span-1",
+                        attrs: { "aria-labelledby": "bookable-details-title" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "bg-white shadow sm:rounded-lg" },
+                          [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "border-t border-gray-200 px-4 py-5 sm:px-6"
+                              },
+                              [
+                                _c(
+                                  "dl",
+                                  {
+                                    staticClass:
+                                      "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-1"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "sm:col-span-1" },
+                                      [
+                                        _c(
+                                          "dt",
+                                          {
+                                            staticClass:
+                                              "text-sm font-medium text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Dates\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dd",
+                                          {
+                                            staticClass:
+                                              "mt-1 text-sm text-gray-900"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        From " +
+                                                _vm._s(_vm.booking.from) +
+                                                " to " +
+                                                _vm._s(_vm.booking.to) +
+                                                "\n                                    "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "sm:col-span-1" },
+                                      [
+                                        _c(
+                                          "dt",
+                                          {
+                                            staticClass:
+                                              "text-sm font-medium text-gray-500"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                        Property\n                                    "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "dd",
+                                          {
+                                            staticClass:
+                                              "mt-1 text-sm text-gray-900"
+                                          },
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                staticClass: "font-medium",
+                                                attrs: {
+                                                  to: {
+                                                    name: "bookable",
+                                                    params: {
+                                                      id:
+                                                        _vm.booking.bookable
+                                                          .bookable_id
+                                                    }
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.booking.bookable.title
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._m(4)
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
                   ]
                 )
               ])
@@ -44027,105 +44166,44 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "section",
-      {
-        staticClass: "lg:col-start-3 lg:col-span-1",
-        attrs: { "aria-labelledby": "bookable-details-title" }
-      },
-      [
-        _c("div", { staticClass: "bg-white shadow sm:rounded-lg" }, [
-          _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
-            _c(
-              "h2",
-              {
-                staticClass: "text-lg leading-6 font-medium text-gray-900",
-                attrs: { id: "bookable-details-title" }
-              },
-              [
-                _vm._v(
-                  "\n                                Your stay\n                            "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "mt-1 max-w-2xl text-sm text-gray-500" }, [
-              _vm._v(
-                "\n                                Your review is only in relation to this rental\n                            "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "border-t border-gray-200 px-4 py-5 sm:px-6" },
-            [
-              _c(
-                "dl",
-                {
-                  staticClass: "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-1"
-                },
-                [
-                  _c("div", { staticClass: "sm:col-span-1" }, [
-                    _c(
-                      "dt",
-                      { staticClass: "text-sm font-medium text-gray-500" },
-                      [
-                        _vm._v(
-                          "\n                                        Dates\n                                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
-                      _vm._v(
-                        "\n                                        [INSERT BOOKABLE DATES]\n                                    "
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "sm:col-span-1" }, [
-                    _c(
-                      "dt",
-                      { staticClass: "text-sm font-medium text-gray-500" },
-                      [
-                        _vm._v(
-                          "\n                                        Property\n                                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
-                      _vm._v(
-                        "\n                                        [INSERT PROPERTY NAME]\n                                    "
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "sm:col-span-1" }, [
-                    _c(
-                      "dt",
-                      { staticClass: "text-sm font-medium text-gray-500" },
-                      [
-                        _vm._v(
-                          "\n                                        Host\n                                    "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
-                      _vm._v(
-                        "\n                                        [INSERT HOST NAME]\n                                    "
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]
+    return _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
+      _c(
+        "h2",
+        {
+          staticClass: "text-lg leading-6 font-medium text-gray-900",
+          attrs: { id: "bookable-details-title" }
+        },
+        [
+          _vm._v(
+            "\n                                Your stay\n                            "
           )
-        ])
-      ]
-    )
+        ]
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "mt-1 max-w-2xl text-sm text-gray-500" }, [
+        _vm._v(
+          "\n                                Your review is only in relation to this rental\n                            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sm:col-span-1" }, [
+      _c("dt", { staticClass: "text-sm font-medium text-gray-500" }, [
+        _vm._v(
+          "\n                                        Host\n                                    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("dd", { staticClass: "mt-1 text-sm text-gray-900" }, [
+        _vm._v(
+          "\n                                        [INSERT HOST NAME]\n                                    "
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true

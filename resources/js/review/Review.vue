@@ -93,7 +93,7 @@
                                             Dates
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
-                                            [INSERT BOOKABLE DATES]
+                                            From {{ booking.from }} to {{ booking.to }}
                                         </dd>
                                     </div>
                                     <div class="sm:col-span-1">
@@ -101,7 +101,10 @@
                                             Property
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
-                                            [INSERT PROPERTY NAME]
+                                            <router-link
+                                                class="font-medium"
+                                                :to="{name: 'bookable', params: { id: booking.bookable.bookable_id}}"
+                                            >{{ booking.bookable.title }}</router-link>
                                         </dd>
                                     </div>
                                     <div class="sm:col-span-1">
@@ -131,22 +134,43 @@
                     content: null
                 },
                 existingReview: null,
-                loading: false
+                loading: false,
+                booking: null
             };
         },
         created() {
             this.loading = true;
             axios
                 .get(`/api/reviews/${this.$route.params.id}`)
-                .then(response => (this.existingReview = response.data.data))
-                .catch(err => {
-                    //
+                .then(response => {
+                    this.existingReview = response.data.data
                 })
-                .then(() => (this.loading = false));
+                .catch(err => {
+                    if (
+                        err.response &&
+                        err.response.status &&
+                        404 === err.response.status
+                    ) {
+                        return axios
+                            .get(`/api/booking-by-review/${this.$route.params.id}`)
+                            .then(response => {
+                                this.booking = response.data.data;
+                            });
+                    }
+                })
+                .then(() => {
+                    this.loading = false
+                });
         },
         computed: {
             alreadyReviewed() {
+                return this.hasReview || !this.booking;
+            },
+            hasReview() {
                 return this.existingReview !== null;
+            },
+            hasBooking() {
+                return this.booking !== null;
             }
         }
     };
