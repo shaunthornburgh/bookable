@@ -1938,6 +1938,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _shared_utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../shared/utils/response */ "./resources/js/shared/utils/response.js");
 //
 //
 //
@@ -2000,6 +2001,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     bookableId: String
@@ -2022,7 +2024,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/bookables/".concat(this.bookableId, "/availability?from=").concat(this.from, "&to=").concat(this.to)).then(function (response) {
         _this.status = response.status;
       })["catch"](function (error) {
-        if (422 === error.response.status) {
+        if (Object(_shared_utils_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(error)) {
           _this.errors = error.response.data.errors;
         }
 
@@ -2668,6 +2670,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2680,7 +2687,9 @@ __webpack_require__.r(__webpack_exports__);
       existingReview: null,
       loading: false,
       booking: null,
-      error: false
+      error: false,
+      errors: null,
+      sending: false
     };
   },
   created: function created() {
@@ -2725,14 +2734,27 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this2 = this;
 
-      this.loading = true;
+      this.errors = null;
+      this.sending = true;
       axios.post("/api/reviews", this.review).then(function (response) {
         return console.log(response);
       })["catch"](function (err) {
-        return _this2.error = true;
+        if (Object(_shared_utils_response__WEBPACK_IMPORTED_MODULE_0__["is422"])(err)) {
+          var errors = err.response.data.errors;
+
+          if (errors["content"] && 1 === _.size(errors)) {
+            _this2.errors = errors;
+            return;
+          }
+        }
+
+        _this2.error = true;
       }).then(function () {
-        return _this2.loading = false;
+        return _this2.sending = false;
       });
+    },
+    errorFor: function errorFor(field) {
+      return null !== this.errors && this.errors[field] ? this.errors[field] : null;
     }
   }
 });
@@ -43998,7 +44020,14 @@ var render = function() {
                                                         }
                                                       ],
                                                       staticClass:
-                                                        "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md",
+                                                        "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md border rounded pl-2 pt-1 pb-1",
+                                                      class: [
+                                                        {
+                                                          "border-red-500": this.errorFor(
+                                                            "content"
+                                                          )
+                                                        }
+                                                      ],
                                                       attrs: {
                                                         id: "about",
                                                         name: "about",
@@ -44025,8 +44054,29 @@ var render = function() {
                                                           )
                                                         }
                                                       }
-                                                    })
-                                                  ]
+                                                    }),
+                                                    _vm._v(" "),
+                                                    _vm._l(
+                                                      this.errorFor("content"),
+                                                      function(error, index) {
+                                                        return _c(
+                                                          "span",
+                                                          {
+                                                            key:
+                                                              "content" + index,
+                                                            staticClass:
+                                                              "flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(error)
+                                                            )
+                                                          ]
+                                                        )
+                                                      }
+                                                    )
+                                                  ],
+                                                  2
                                                 ),
                                                 _vm._v(" "),
                                                 _c(
@@ -44064,7 +44114,7 @@ var render = function() {
                                           "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
                                         attrs: {
                                           type: "submit",
-                                          disabled: _vm.loading
+                                          disabled: _vm.sending
                                         },
                                         on: {
                                           click: function($event) {
@@ -60838,14 +60888,22 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/js/shared/utils/response.js ***!
   \***********************************************/
-/*! exports provided: is404 */
+/*! exports provided: is404, is422 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "is404", function() { return is404; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "is422", function() { return is422; });
 var is404 = function is404(err) {
-  return err.response && err.response.status && 404 === err.response.status;
+  return isErrorWithResponseAndStatus(err) && 404 === err.response.status;
+};
+var is422 = function is422(err) {
+  return isErrorWithResponseAndStatus(err) && 422 === err.response.status;
+};
+
+var isErrorWithResponseAndStatus = function isErrorWithResponseAndStatus(err) {
+  return err.response && err.response.status;
 };
 
 /***/ }),

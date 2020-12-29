@@ -47,9 +47,14 @@
                                                         id="about"
                                                         name="about"
                                                         rows="3"
-                                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                                        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md border rounded pl-2 pt-1 pb-1"
                                                         v-model="review.content"
+                                                        :class="[{'border-red-500': this.errorFor('content')}]"
                                                     ></textarea>
+                                                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
+                                                          v-for="(error, index) in this.errorFor('content')"
+                                                          :key="'content' + index"
+                                                    >{{ error }}</span>
                                                 </div>
                                                 <p class="mt-2 text-sm text-gray-500">Write a few sentences about your stay with [insert host name].</p>
                                             </div>
@@ -61,7 +66,7 @@
                                         type="submit"
                                         class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                         @click.prevent="submit"
-                                        :disabled="loading"
+                                        :disabled="sending"
                                     >Submit review
                                     </button>
                                 </div>
@@ -119,7 +124,8 @@
 </template>
 
 <script>
-    import { is404 } from "../shared/utils/response";
+    import { is404, is422 } from "../shared/utils/response";
+
     export default {
         data() {
             return {
@@ -131,7 +137,9 @@
                 existingReview: null,
                 loading: false,
                 booking: null,
-                error: false
+                error: false,
+                errors: null,
+                sending: false
             };
         },
         created() {
@@ -178,12 +186,29 @@
         },
         methods: {
             submit() {
-                this.loading = true;
+                this.errors = null;
+                this.sending = true;
                 axios
                     .post(`/api/reviews`, this.review)
                     .then(response => console.log(response))
-                    .catch(err => (this.error = true))
-                    .then(() => (this.loading = false));
+                    .catch(err => {
+                        if (is422(err)) {
+                            const errors = err.response.data.errors;
+
+                            if (errors["content"] && 1 === _.size(errors)) {
+                                this.errors = errors;
+                                return;
+                            }
+                        }
+
+                        this.error = true;
+                    })
+                    .then(() => (this.sending = false));
+            },
+            errorFor(field) {
+                return null !== this.errors && this.errors[field]
+                    ? this.errors[field]
+                    : null;
             }
         }
     };
