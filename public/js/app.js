@@ -2661,6 +2661,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2712,6 +2719,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     twoColumns: function twoColumns() {
       return this.loading || !this.alreadyReviewed;
+    }
+  },
+  methods: {
+    submit: function submit() {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.post("/api/reviews", this.review).then(function (response) {
+        return console.log(response);
+      })["catch"](function (err) {
+        return _this2.error = true;
+      }).then(function () {
+        return _this2.loading = false;
+      });
     }
   }
 });
@@ -43826,18 +43847,22 @@ var render = function() {
         ])
       : _c("div", [
           _vm.alreadyReviewed
-            ? _c(
-                "div",
-                [
-                  _c("warning", {
-                    attrs: {
-                      message:
-                        "It looks like you have already left a review for this booking."
-                    }
-                  })
-                ],
-                1
-              )
+            ? _c("div", [
+                _vm.loading
+                  ? _c("div", [_vm._v("Loading...")])
+                  : _c(
+                      "div",
+                      [
+                        _c("warning", {
+                          attrs: {
+                            message:
+                              "It looks like you have already left a review for this booking."
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ])
             : _c("div", [
                 _c(
                   "div",
@@ -44025,7 +44050,37 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _vm._m(1)
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "border-t border-gray-200 px-4 py-5 sm:px-6 text-right"
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                                        attrs: {
+                                          type: "submit",
+                                          disabled: _vm.loading
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            return _vm.submit($event)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "Submit review\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
                               ]
                             )
                           ]
@@ -44044,7 +44099,7 @@ var render = function() {
                           "div",
                           { staticClass: "bg-white shadow sm:rounded-lg" },
                           [
-                            _vm._m(2),
+                            _vm._m(1),
                             _vm._v(" "),
                             _c(
                               "div",
@@ -44149,7 +44204,7 @@ var render = function() {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _vm._m(3)
+                                    _vm._m(2)
                                   ]
                                 )
                               ]
@@ -44189,30 +44244,6 @@ var staticRenderFns = [
         )
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "border-t border-gray-200 px-4 py-5 sm:px-6 text-right" },
-      [
-        _c(
-          "button",
-          {
-            staticClass:
-              "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-            attrs: { type: "submit" }
-          },
-          [
-            _vm._v(
-              "\n                                    Submit review\n                                "
-            )
-          ]
-        )
-      ]
-    )
   },
   function() {
     var _vm = this

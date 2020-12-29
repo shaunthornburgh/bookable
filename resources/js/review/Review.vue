@@ -8,7 +8,10 @@
         </div>
         <div v-else>
             <div v-if="alreadyReviewed">
-                <warning message="It looks like you have already left a review for this booking."></warning>
+                <div v-if="loading">Loading...</div>
+                <div v-else>
+                    <warning message="It looks like you have already left a review for this booking."></warning>
+                </div>
             </div>
             <div v-else>
                 <div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
@@ -54,8 +57,12 @@
                                     </form>
                                 </div>
                                 <div class="border-t border-gray-200 px-4 py-5 sm:px-6 text-right">
-                                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        Submit review
+                                    <button
+                                        type="submit"
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                        @click.prevent="submit"
+                                        :disabled="loading"
+                                    >Submit review
                                     </button>
                                 </div>
                             </div>
@@ -167,6 +174,16 @@
             },
             twoColumns() {
                 return this.loading || !this.alreadyReviewed;
+            }
+        },
+        methods: {
+            submit() {
+                this.loading = true;
+                axios
+                    .post(`/api/reviews`, this.review)
+                    .then(response => console.log(response))
+                    .catch(err => (this.error = true))
+                    .then(() => (this.loading = false));
             }
         }
     };
