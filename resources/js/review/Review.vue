@@ -1,28 +1,14 @@
 <template>
     <div>
-        <div v-if="loading">Loading...</div>
+        <div v-if="error">
+            <div v-if="loading">Loading...</div>
+            <div v-else>
+                <error message="There was an error with the response from the server, please try again"></error>
+            </div>
+        </div>
         <div v-else>
             <div v-if="alreadyReviewed">
-                <div class="rounded-md bg-yellow-50 p-4">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <!-- Heroicon name: exclamation -->
-                            <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                            </svg>
-                        </div>
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-yellow-800">
-                                Something's up!
-                            </h3>
-                            <div class="mt-2 text-sm text-yellow-700">
-                                <p>
-                                    It looks like you have already left a review for this booking.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <warning message="It looks like you have already left a review for this booking."></warning>
             </div>
             <div v-else>
                 <div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
@@ -83,7 +69,7 @@
                                     Your stay
                                 </h2>
                                 <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                                    Your review is only in relation to this rental
+                                    Details of your stay
                                 </p>
                             </div>
                             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
@@ -126,40 +112,44 @@
 </template>
 
 <script>
+    import { is404 } from "../shared/utils/response";
     export default {
         data() {
             return {
                 review: {
+                    id: null,
                     rating: 5,
                     content: null
                 },
                 existingReview: null,
                 loading: false,
-                booking: null
+                booking: null,
+                error: false
             };
         },
         created() {
+            this.review.id = this.$route.params.id;
             this.loading = true;
             axios
-                .get(`/api/reviews/${this.$route.params.id}`)
+                .get(`/api/reviews/${this.review.id}`)
                 .then(response => {
-                    this.existingReview = response.data.data
+                    this.existingReview = response.data.data;
                 })
                 .catch(err => {
-                    if (
-                        err.response &&
-                        err.response.status &&
-                        404 === err.response.status
-                    ) {
+                    if (is404(err)) {
                         return axios
-                            .get(`/api/booking-by-review/${this.$route.params.id}`)
+                            .get(`/api/booking-by-review/${this.review.id}`)
                             .then(response => {
                                 this.booking = response.data.data;
+                            })
+                            .catch(err => {
+                                this.error = !is404(err);
                             });
                     }
+                    this.error = true;
                 })
                 .then(() => {
-                    this.loading = false
+                    this.loading = false;
                 });
         },
         computed: {
@@ -171,6 +161,12 @@
             },
             hasBooking() {
                 return this.booking !== null;
+            },
+            oneColumn() {
+                return !this.loading && this.alreadyReviewed;
+            },
+            twoColumns() {
+                return this.loading || !this.alreadyReviewed;
             }
         }
     };
