@@ -2682,8 +2682,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2699,7 +2697,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       loading: false,
       booking: null,
       error: false,
-      sending: false
+      sending: false,
+      success: false
     };
   },
   created: function created() {
@@ -2785,8 +2784,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       this.errors = null;
       this.sending = true;
+      this.success = false;
       axios.post("/api/reviews", this.review).then(function (response) {
-        return console.log(response);
+        _this2.success = 201 === response.status;
       })["catch"](function (err) {
         if (Object(_shared_utils_response__WEBPACK_IMPORTED_MODULE_1__["is422"])(err)) {
           var errors = err.response.data.errors;
@@ -2874,82 +2874,6 @@ __webpack_require__.r(__webpack_exports__);
     key: function key(index) {
       return "validation_error_".concat(index, "_").concat(Math.random());
     }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/alerts/Error.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/components/alerts/Error.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    message: String
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/alerts/Warning.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/components/alerts/Warning.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    message: String
   }
 });
 
@@ -44666,411 +44590,419 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.error
-      ? _c("div", [
-          _vm.loading
-            ? _c("div", [_vm._v("Loading...")])
-            : _c(
-                "div",
-                [
-                  _c("error", {
-                    attrs: {
-                      message:
-                        "There was an error with the response from the server, please try again"
-                    }
-                  })
-                ],
-                1
-              )
-        ])
-      : _c("div", [
-          _vm.alreadyReviewed
-            ? _c("div", [
-                _vm.loading
-                  ? _c("div", [_vm._v("Loading...")])
-                  : _c(
-                      "div",
-                      [
-                        _c("warning", {
-                          attrs: {
-                            message:
-                              "It looks like you have already left a review for this booking."
-                          }
-                        })
-                      ],
-                      1
-                    )
-              ])
-            : _c("div", [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3"
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "space-y-6 lg:col-start-1 lg:col-span-2" },
-                      [
-                        _c(
-                          "section",
-                          { attrs: { "aria-labelledby": "review-title" } },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "bg-white shadow sm:rounded-lg" },
-                              [
-                                _vm._m(0),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "border-t border-gray-200 px-4 py-5 sm:px-6"
-                                  },
-                                  [
-                                    _c(
-                                      "form",
-                                      {
-                                        staticClass:
-                                          "space-y-8 divide-y divide-gray-200"
-                                      },
-                                      [
-                                        _c(
-                                          "dl",
-                                          {
-                                            staticClass:
-                                              "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2"
-                                          },
-                                          [
-                                            _c(
-                                              "div",
-                                              { staticClass: "sm:col-span-6" },
-                                              [
-                                                _c(
-                                                  "label",
-                                                  {
-                                                    staticClass:
-                                                      "block text-sm font-medium text-gray-700",
-                                                    attrs: { for: "about" }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                Stars\n                                            "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "mt-1" },
-                                                  [
-                                                    _c("star-rating", {
-                                                      model: {
-                                                        value:
-                                                          _vm.review.rating,
-                                                        callback: function(
-                                                          $$v
-                                                        ) {
-                                                          _vm.$set(
-                                                            _vm.review,
-                                                            "rating",
-                                                            $$v
-                                                          )
-                                                        },
-                                                        expression:
-                                                          "review.rating"
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "p",
-                                                  {
-                                                    staticClass:
-                                                      "mt-2 text-sm text-gray-500"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "How many stars would you give out of 5?"
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "sm:col-span-6" },
-                                              [
-                                                _c(
-                                                  "label",
-                                                  {
-                                                    staticClass:
-                                                      "block text-sm font-medium text-gray-700",
-                                                    attrs: { for: "about" }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                Review content\n                                            "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "mt-1" },
-                                                  [
-                                                    _c("textarea", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value:
-                                                            _vm.review.content,
-                                                          expression:
-                                                            "review.content"
-                                                        }
-                                                      ],
+    _vm.loading
+      ? _c("div", [_vm._v("Loading...")])
+      : _c(
+          "div",
+          [
+            _vm.error
+              ? _c("error", [
+                  _vm._v(
+                    "\n            There was an error with the response from the server, please try again\n        "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.success && !_vm.error
+              ? _c("success", [
+                  _vm._v(
+                    "\n            Thank you for leaving a review for your stay here!\n        "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.alreadyReviewed && !_vm.error
+              ? _c("warning", [
+                  _vm._v(
+                    "\n            It looks like you have already left a review for this booking.\n        "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.success && !_vm.error && !_vm.alreadyReviewed
+              ? _c("div", [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "space-y-6 lg:col-start-1 lg:col-span-2"
+                        },
+                        [
+                          _c(
+                            "section",
+                            { attrs: { "aria-labelledby": "review-title" } },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "bg-white shadow sm:rounded-lg"
+                                },
+                                [
+                                  _vm._m(0),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "border-t border-gray-200 px-4 py-5 sm:px-6"
+                                    },
+                                    [
+                                      _c(
+                                        "form",
+                                        {
+                                          staticClass:
+                                            "space-y-8 divide-y divide-gray-200"
+                                        },
+                                        [
+                                          _c(
+                                            "dl",
+                                            {
+                                              staticClass:
+                                                "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2"
+                                            },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass: "sm:col-span-6"
+                                                },
+                                                [
+                                                  _c(
+                                                    "label",
+                                                    {
                                                       staticClass:
-                                                        "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md border rounded pl-2 pt-1 pb-1",
-                                                      class: [
-                                                        {
-                                                          "border-red-500": this.errorFor(
+                                                        "block text-sm font-medium text-gray-700",
+                                                      attrs: { for: "about" }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                Stars\n                                            "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "mt-1" },
+                                                    [
+                                                      _c("star-rating", {
+                                                        model: {
+                                                          value:
+                                                            _vm.review.rating,
+                                                          callback: function(
+                                                            $$v
+                                                          ) {
+                                                            _vm.$set(
+                                                              _vm.review,
+                                                              "rating",
+                                                              $$v
+                                                            )
+                                                          },
+                                                          expression:
+                                                            "review.rating"
+                                                        }
+                                                      })
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "p",
+                                                    {
+                                                      staticClass:
+                                                        "mt-2 text-sm text-gray-500"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "How many stars would you give out of 5?"
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass: "sm:col-span-6"
+                                                },
+                                                [
+                                                  _c(
+                                                    "label",
+                                                    {
+                                                      staticClass:
+                                                        "block text-sm font-medium text-gray-700",
+                                                      attrs: { for: "about" }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                Review content\n                                            "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "mt-1" },
+                                                    [
+                                                      _c("textarea", {
+                                                        directives: [
+                                                          {
+                                                            name: "model",
+                                                            rawName: "v-model",
+                                                            value:
+                                                              _vm.review
+                                                                .content,
+                                                            expression:
+                                                              "review.content"
+                                                          }
+                                                        ],
+                                                        staticClass:
+                                                          "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md border rounded pl-2 pt-1 pb-1",
+                                                        class: [
+                                                          {
+                                                            "border-red-500": this.errorFor(
+                                                              "content"
+                                                            )
+                                                          }
+                                                        ],
+                                                        attrs: {
+                                                          id: "about",
+                                                          name: "about",
+                                                          rows: "3"
+                                                        },
+                                                        domProps: {
+                                                          value:
+                                                            _vm.review.content
+                                                        },
+                                                        on: {
+                                                          input: function(
+                                                            $event
+                                                          ) {
+                                                            if (
+                                                              $event.target
+                                                                .composing
+                                                            ) {
+                                                              return
+                                                            }
+                                                            _vm.$set(
+                                                              _vm.review,
+                                                              "content",
+                                                              $event.target
+                                                                .value
+                                                            )
+                                                          }
+                                                        }
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("validation-errors", {
+                                                        attrs: {
+                                                          errors: _vm.errorFor(
                                                             "content"
                                                           )
                                                         }
-                                                      ],
-                                                      attrs: {
-                                                        id: "about",
-                                                        name: "about",
-                                                        rows: "3"
-                                                      },
-                                                      domProps: {
-                                                        value:
-                                                          _vm.review.content
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.$set(
-                                                            _vm.review,
-                                                            "content",
-                                                            $event.target.value
-                                                          )
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c("validation-errors", {
-                                                      attrs: {
-                                                        errors: _vm.errorFor(
-                                                          "content"
-                                                        )
-                                                      }
-                                                    })
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "p",
-                                                  {
-                                                    staticClass:
-                                                      "mt-2 text-sm text-gray-500"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "Write a few sentences about your stay with [insert host name]."
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "border-t border-gray-200 px-4 py-5 sm:px-6 text-right"
-                                  },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-                                        attrs: {
-                                          type: "submit",
-                                          disabled: _vm.sending
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            $event.preventDefault()
-                                            return _vm.submit($event)
+                                                      })
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "p",
+                                                    {
+                                                      staticClass:
+                                                        "mt-2 text-sm text-gray-500"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "Write a few sentences about your stay with [insert host name]."
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "border-t border-gray-200 px-4 py-5 sm:px-6 text-right"
+                                    },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                                          attrs: {
+                                            type: "submit",
+                                            disabled: _vm.sending
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.submit($event)
+                                            }
                                           }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "Submit review\n                                "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "section",
-                      {
-                        staticClass: "lg:col-start-3 lg:col-span-1",
-                        attrs: { "aria-labelledby": "bookable-details-title" }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "bg-white shadow sm:rounded-lg" },
-                          [
-                            _vm._m(1),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "border-t border-gray-200 px-4 py-5 sm:px-6"
-                              },
-                              [
-                                _c(
-                                  "dl",
-                                  {
-                                    staticClass:
-                                      "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-1"
-                                  },
-                                  [
-                                    _c(
-                                      "div",
-                                      { staticClass: "sm:col-span-1" },
-                                      [
-                                        _c(
-                                          "dt",
-                                          {
-                                            staticClass:
-                                              "text-sm font-medium text-gray-500"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                        Dates\n                                    "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "dd",
-                                          {
-                                            staticClass:
-                                              "mt-1 text-sm text-gray-900"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                        From " +
-                                                _vm._s(_vm.booking.from) +
-                                                " to " +
-                                                _vm._s(_vm.booking.to) +
-                                                "\n                                    "
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "sm:col-span-1" },
-                                      [
-                                        _c(
-                                          "dt",
-                                          {
-                                            staticClass:
-                                              "text-sm font-medium text-gray-500"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                        Property\n                                    "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "dd",
-                                          {
-                                            staticClass:
-                                              "mt-1 text-sm text-gray-900"
-                                          },
-                                          [
-                                            _c(
-                                              "router-link",
-                                              {
-                                                staticClass: "font-medium",
-                                                attrs: {
-                                                  to: {
-                                                    name: "bookable",
-                                                    params: {
-                                                      id:
-                                                        _vm.booking.bookable
-                                                          .bookable_id
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Submit review\n                                "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "section",
+                        {
+                          staticClass: "lg:col-start-3 lg:col-span-1",
+                          attrs: { "aria-labelledby": "bookable-details-title" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "bg-white shadow sm:rounded-lg" },
+                            [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "border-t border-gray-200 px-4 py-5 sm:px-6"
+                                },
+                                [
+                                  _c(
+                                    "dl",
+                                    {
+                                      staticClass:
+                                        "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-1"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "sm:col-span-1" },
+                                        [
+                                          _c(
+                                            "dt",
+                                            {
+                                              staticClass:
+                                                "text-sm font-medium text-gray-500"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        Dates\n                                    "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "dd",
+                                            {
+                                              staticClass:
+                                                "mt-1 text-sm text-gray-900"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        From " +
+                                                  _vm._s(_vm.booking.from) +
+                                                  " to " +
+                                                  _vm._s(_vm.booking.to) +
+                                                  "\n                                    "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "sm:col-span-1" },
+                                        [
+                                          _c(
+                                            "dt",
+                                            {
+                                              staticClass:
+                                                "text-sm font-medium text-gray-500"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                        Property\n                                    "
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "dd",
+                                            {
+                                              staticClass:
+                                                "mt-1 text-sm text-gray-900"
+                                            },
+                                            [
+                                              _c(
+                                                "router-link",
+                                                {
+                                                  staticClass: "font-medium",
+                                                  attrs: {
+                                                    to: {
+                                                      name: "bookable",
+                                                      params: {
+                                                        id:
+                                                          _vm.booking.bookable
+                                                            .bookable_id
+                                                      }
                                                     }
                                                   }
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  _vm._s(
-                                                    _vm.booking.bookable.title
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.booking.bookable.title
+                                                    )
                                                   )
-                                                )
-                                              ]
-                                            )
-                                          ],
-                                          1
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm._m(2)
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-        ])
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._m(2)
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e()
+          ],
+          1
+        )
   ])
 }
 var staticRenderFns = [
@@ -45296,7 +45228,68 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mt-2 text-sm text-yellow-700" }, [
-          _c("p", [_vm._v(_vm._s(_vm.message))])
+          _c("p", [_vm._t("default")], 2)
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/alerts/Success.vue?vue&type=template&id=6995d250&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/shared/components/alerts/Success.vue?vue&type=template&id=6995d250& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "rounded-md bg-green-50 p-4" }, [
+    _c("div", { staticClass: "flex" }, [
+      _c("div", { staticClass: "flex-shrink-0" }, [
+        _c(
+          "svg",
+          {
+            staticClass: "h-5 w-5 text-green-400",
+            attrs: {
+              xmlns: "http://www.w3.org/2000/svg",
+              viewBox: "0 0 20 20",
+              fill: "currentColor",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c("path", {
+              attrs: {
+                "fill-rule": "evenodd",
+                d:
+                  "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z",
+                "clip-rule": "evenodd"
+              }
+            })
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ml-3" }, [
+        _c("h3", { staticClass: "text-sm font-medium text-green-800" }, [
+          _vm._v("\n                Success!\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-2 text-sm text-green-700" }, [
+          _c("p", [_vm._t("default")], 2)
         ])
       ])
     ])
@@ -45357,7 +45350,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mt-2 text-sm text-yellow-700" }, [
-          _c("p", [_vm._v(_vm._s(_vm.message))])
+          _c("p", [_vm._t("default")], 2)
         ])
       ])
     ])
@@ -60697,8 +60690,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_components_StarRating__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shared/components/StarRating */ "./resources/js/shared/components/StarRating.vue");
 /* harmony import */ var _shared_components_alerts_Error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shared/components/alerts/Error */ "./resources/js/shared/components/alerts/Error.vue");
 /* harmony import */ var _shared_components_alerts_Warning__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/components/alerts/Warning */ "./resources/js/shared/components/alerts/Warning.vue");
-/* harmony import */ var _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/components/ValidationErrors */ "./resources/js/shared/components/ValidationErrors.vue");
+/* harmony import */ var _shared_components_alerts_Success__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/components/alerts/Success */ "./resources/js/shared/components/alerts/Success.vue");
+/* harmony import */ var _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shared/components/ValidationErrors */ "./resources/js/shared/components/ValidationErrors.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -60716,7 +60711,8 @@ Vue.filter("fromNow", function (value) {
 Vue.component("star-rating", _shared_components_StarRating__WEBPACK_IMPORTED_MODULE_4__["default"]);
 Vue.component("error", _shared_components_alerts_Error__WEBPACK_IMPORTED_MODULE_5__["default"]);
 Vue.component("warning", _shared_components_alerts_Warning__WEBPACK_IMPORTED_MODULE_6__["default"]);
-Vue.component("validation-errors", _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_7__["default"]);
+Vue.component("success", _shared_components_alerts_Success__WEBPACK_IMPORTED_MODULE_7__["default"]);
+Vue.component("validation-errors", _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_8__["default"]);
 var app = new Vue({
   el: '#app',
   router: _routes__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -61670,17 +61666,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Error_vue_vue_type_template_id_11cf2cc6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Error.vue?vue&type=template&id=11cf2cc6& */ "./resources/js/shared/components/alerts/Error.vue?vue&type=template&id=11cf2cc6&");
-/* harmony import */ var _Error_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Error.vue?vue&type=script&lang=js& */ "./resources/js/shared/components/alerts/Error.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-
-
+var script = {}
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Error_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
   _Error_vue_vue_type_template_id_11cf2cc6___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Error_vue_vue_type_template_id_11cf2cc6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -61694,20 +61688,6 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/shared/components/alerts/Error.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/shared/components/alerts/Error.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/shared/components/alerts/Error.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Error_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Error.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/alerts/Error.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Error_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -61729,6 +61709,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/shared/components/alerts/Success.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/shared/components/alerts/Success.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Success_vue_vue_type_template_id_6995d250___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Success.vue?vue&type=template&id=6995d250& */ "./resources/js/shared/components/alerts/Success.vue?vue&type=template&id=6995d250&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _Success_vue_vue_type_template_id_6995d250___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Success_vue_vue_type_template_id_6995d250___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/shared/components/alerts/Success.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/shared/components/alerts/Success.vue?vue&type=template&id=6995d250&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/shared/components/alerts/Success.vue?vue&type=template&id=6995d250& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Success_vue_vue_type_template_id_6995d250___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Success.vue?vue&type=template&id=6995d250& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/alerts/Success.vue?vue&type=template&id=6995d250&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Success_vue_vue_type_template_id_6995d250___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Success_vue_vue_type_template_id_6995d250___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/shared/components/alerts/Warning.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/shared/components/alerts/Warning.vue ***!
@@ -61739,17 +61772,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Warning_vue_vue_type_template_id_0bbbdc1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Warning.vue?vue&type=template&id=0bbbdc1e& */ "./resources/js/shared/components/alerts/Warning.vue?vue&type=template&id=0bbbdc1e&");
-/* harmony import */ var _Warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Warning.vue?vue&type=script&lang=js& */ "./resources/js/shared/components/alerts/Warning.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-
-
+var script = {}
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
   _Warning_vue_vue_type_template_id_0bbbdc1e___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Warning_vue_vue_type_template_id_0bbbdc1e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -61763,20 +61794,6 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/shared/components/alerts/Warning.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/shared/components/alerts/Warning.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/shared/components/alerts/Warning.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Warning.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/shared/components/alerts/Warning.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Warning_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

@@ -9,20 +9,14 @@
             </div>
             <div class="ml-3">
                 <h3 class="text-sm font-medium text-yellow-800">
-                    Something's up!
+                    Uh oh, there was a problem!
                 </h3>
                 <div class="mt-2 text-sm text-yellow-700">
-                    <p>{{ message }}</p>
+                    <p>
+                        <slot></slot>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
-<script>
-    export default {
-        props: {
-            message: String
-        }
-    };
-</script>
