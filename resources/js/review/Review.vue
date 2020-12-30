@@ -51,10 +51,7 @@
                                                         v-model="review.content"
                                                         :class="[{'border-red-500': this.errorFor('content')}]"
                                                     ></textarea>
-                                                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
-                                                          v-for="(error, index) in this.errorFor('content')"
-                                                          :key="'content' + index"
-                                                    >{{ error }}</span>
+                                                    <validation-errors :errors="errorFor('content')"></validation-errors>
                                                 </div>
                                                 <p class="mt-2 text-sm text-gray-500">Write a few sentences about your stay with [insert host name].</p>
                                             </div>

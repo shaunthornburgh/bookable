@@ -22,10 +22,7 @@
                         @keyup.enter="check"
                         :class="[{'border-red-500': this.errorFor('from')}]"
                     />
-                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
-                        v-for="(error, index) in this.errorFor('from')"
-                        :key="'from' + index"
-                    >{{ error }}</span>
+                    <validation-errors :errors="errorFor('from')"></validation-errors>
                 </div>
                 <div class="flex flex-col w-6/12 pl-1.5">
                     <label
@@ -42,10 +39,7 @@
                         @keyup.enter="check"
                         :class="[{'border-red-500': this.errorFor('to')}]"
                     />
-                    <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
-                        v-for="(error, index) in this.errorFor('to')"
-                        :key="'to' + index"
-                        >{{ error }}</span>
+                    <validation-errors :errors="errorFor('to')"></validation-errors>
                 </div>
             </div>
             <button
