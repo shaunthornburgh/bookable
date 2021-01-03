@@ -2011,7 +2011,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
-    bookableId: String
+    bookableId: [String, Number]
   },
   data: function data() {
     return {
@@ -2246,7 +2246,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    bookableId: String
+    bookableId: [String, Number]
   },
   data: function data() {
     return {
@@ -45224,7 +45224,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "ml-3" }, [
         _c("h3", { staticClass: "text-sm font-medium text-yellow-800" }, [
-          _vm._v("\n                Something's up!\n            ")
+          _vm._v("\n                Uh oh, there was a problem!\n            ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mt-2 text-sm text-yellow-700" }, [
@@ -45346,7 +45346,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "ml-3" }, [
         _c("h3", { staticClass: "text-sm font-medium text-yellow-800" }, [
-          _vm._v("\n                Something's up!\n            ")
+          _vm._v("\n                Heads up!\n            ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "mt-2 text-sm text-yellow-700" }, [

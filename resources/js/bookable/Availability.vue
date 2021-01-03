@@ -59,7 +59,7 @@
     export default {
         mixins: [validationErrors],
         props: {
-            bookableId: String,
+            bookableId: [String, Number]
         },
         data() {
             return {
