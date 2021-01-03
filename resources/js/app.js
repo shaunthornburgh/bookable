@@ -10,6 +10,7 @@ import Error from "./shared/components/alerts/Error";
 import Warning from "./shared/components/alerts/Warning";
 import Success from "./shared/components/alerts/Success";
 import ValidationErrors from "./shared/components/ValidationErrors";
+import storeDefinition from "./store";
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
@@ -23,9 +24,12 @@ Vue.component("warning", Warning);
 Vue.component("success", Success);
 Vue.component("validation-errors", ValidationErrors);
 
+const store = new Vuex.Store(storeDefinition);
+
 const app = new Vue({
     el: '#app',
     router,
+    store,
     components: {
         "index": Index
     }
