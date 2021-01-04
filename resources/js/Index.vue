@@ -10,11 +10,23 @@
 </template>
 
 <script>
+    import { mapState } from "vuex";
     import NavBar from "./navigation/NavBar";
 
     export default {
         components: {
             NavBar,
+        },
+        data() {
+            return {
+                lastSearch: this.$store.state.lastSearch
+            };
+        },
+        computed: {
+            ...mapState({
+                lastSearchComputed: "lastSearch"
+            })
         }
     };
 </script>
+
