@@ -13,7 +13,7 @@ class BookableAvailabilityController extends Controller
      *
      * @param $id
      * @param \Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke($id, Request $request)
     {
