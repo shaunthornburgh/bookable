@@ -11,10 +11,28 @@
                         <p>{{ bookable.description }}</p>
                     </div>
                 </div>
-                <reviewlist :bookable-id="this.$route.params.id"></reviewlist>
+                <review-list :bookable-id="this.$route.params.id"></review-list>
             </div>
             <div class="md:col-span-1">
-                <availability :bookable-id="this.$route.params.id"></availability>
+                <availability
+                    :bookable-id="this.$route.params.id"
+                    @availability="checkPrice($event)"
+                    class="mb-4"
+                ></availability>
+
+                <transition name="fade">
+                    <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
+                </transition>
+
+                <transition name="fade">
+                    <div class="sm:pl-3">
+                        <button
+                            type="button"
+                            class="justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full"
+                            v-if="price"
+                        >Book now</button>
+                    </div>
+                </transition>
             </div>
         </div>
     </div>
@@ -24,18 +42,22 @@
 <script>
     import Availability from "./Availability";
     import Gallery from "./Gallery";
-    import Reviewlist from "./ReviewList";
+    import ReviewList from "./ReviewList";
+    import { mapState } from "vuex";
+    import PriceBreakdown from "./PriceBreakdown";
 
     export default {
         components: {
             Availability,
             Gallery,
-            Reviewlist,
+            ReviewList,
+            PriceBreakdown
         },
         data() {
             return {
                 bookable: null,
-                loading: false
+                loading: false,
+                price: null,
             }
         },
         created() {
@@ -46,6 +68,25 @@
                     this.bookable = response.data.data;
                     this.loading = false;
                 });
+        },
+        computed: mapState({
+            lastSearch: "lastSearch"
+        }),
+        methods: {
+            async checkPrice(hasAvailability) {
+                if (!hasAvailability) {
+                    this.price = null;
+                    return;
+                }
+
+                try {
+                    this.price = (await axios.get(
+                        `/api/bookables/${this.bookable.id}/price?from=${this.lastSearch.from}&to=${this.lastSearch.to}`
+                    )).data.data;
+                } catch (err) {
+                    this.price = null;
+                }
+            }
         }
-    }
+    };
 </script>
