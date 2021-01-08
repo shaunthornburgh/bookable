@@ -29,6 +29,7 @@
                         <button
                             type="button"
                             class="justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full"
+                            @click="addToBasket"
                             v-if="price"
                         >Book now</button>
                     </div>
@@ -86,6 +87,13 @@
                 } catch (err) {
                     this.price = null;
                 }
+            },
+            addToBasket() {
+                this.$store.commit("addToBasket", {
+                    bookable: this.bookable,
+                    price: this.price,
+                    dates: this.lastSearch
+                });
             }
         }
     };

@@ -45,9 +45,10 @@
                     </div>
                 </div>
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button aria-label="Notifications" class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out">
+                    <button aria-label="Notifications" class="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out relative overflow-visible">
                         <span class="sr-only">View basket</span>
                         <i class="fas fa-shopping-basket"></i>
+                        <span v-if="itemsInBasket" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">{{ itemsInBasket }}</span>
                     </button>
 
                     <!-- Profile dropdown -->
@@ -75,10 +76,16 @@
 
 <script>
     import AccountDropdown from "./AccountDropdown";
+    import { mapGetters } from "vuex";
 
     export default {
         components: {
             AccountDropdown,
+        },
+        computed: {
+            ...mapGetters({
+                itemsInBasket: "itemsInBasket"
+            })
         }
     };
 </script>
