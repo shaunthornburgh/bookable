@@ -5,7 +5,7 @@
         <div
             v-for="(days, price) in price.breakdown"
             :key="price"
-            class="pt-2 border-b-1 border-t-1 flex justify-between"
+            class="pt-2 border-t-1 border-fuchsia-600 flex justify-between"
         >
             <span style="color: gray">{{ days }} x £{{ price }}</span>
             <span style="color: gray">£{{ days * price }}</span>
