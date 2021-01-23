@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\BookableAvailabilityController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\BookingByReviewController;
 use App\Http\Controllers\Api\BookablePriceController;
+use App\Http\Controllers\Api\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,6 @@ Route::get('/booking-by-review/{reviewKey}', BookingByReviewController::class)
     ->name('booking.by-review.show');
 
 Route::apiResource('reviews', ReviewController::class)->only(['show', 'store']);
+
+Route::post('checkout', CheckoutController::class)->name('checkout');
 
