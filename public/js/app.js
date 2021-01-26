@@ -1966,7 +1966,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../shared/mixins/validationErrors */ "./resources/js/shared/mixins/validationErrors.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2084,13 +2093,198 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["itemsInBasket"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+  mixins: [_shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  data: function data() {
+    return {
+      loading: false,
+      bookingAttempted: false,
+      customer: {
+        first_names: null,
+        last_name: null,
+        email: null,
+        address_line_1: null,
+        address_line_2: null,
+        city: null,
+        county: null,
+        country: null,
+        postcode: null
+      }
+    };
+  },
+  computed: _objectSpread(_objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["itemsInBasket"])), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     basket: function basket(state) {
       return state.basket.items;
     }
-  }))
+  })), {}, {
+    success: function success() {
+      return !this.loading && 0 === this.itemsInBasket && this.bookingAttempted;
+    }
+  }),
+  methods: {
+    book: function book() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.loading = true;
+                _this.bookingAttempted = false;
+                _this.errors = null;
+                _context.prev = 3;
+                _context.next = 6;
+                return axios.post("/api/checkout", {
+                  customer: _this.customer,
+                  bookings: _this.basket.map(function (basketItem) {
+                    return {
+                      bookable_id: basketItem.bookable.id,
+                      from: basketItem.dates.from,
+                      to: basketItem.dates.to
+                    };
+                  })
+                });
+
+              case 6:
+                _this.$store.dispatch("clearBasket");
+
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](3);
+                _this.errors = _context.t0.response && _context.t0.response.data.errors;
+
+              case 12:
+                _this.loading = false;
+                _this.bookingAttempted = true;
+
+              case 14:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[3, 9]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -2279,11 +2473,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
 //
 //
 //
@@ -43922,396 +44111,1015 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass:
-        "sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col"
-    },
     [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "md:col-span-1 pl-5" },
-        [
-          _c("div", { staticClass: "flex justify-between pb-2" }, [
-            _c(
-              "div",
-              { staticClass: "font-semibold", staticStyle: { color: "gray" } },
-              [_vm._v("Your Cart")]
-            ),
-            _vm._v(" "),
-            _vm.itemsInBasket
-              ? _c(
-                  "span",
-                  {
-                    staticClass:
-                      "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
-                  },
-                  [_vm._v("Items " + _vm._s(_vm.itemsInBasket))]
-                )
-              : _c(
-                  "span",
-                  {
-                    staticClass:
-                      "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
-                  },
-                  [_vm._v("Empty")]
-                )
-          ]),
-          _vm._v(" "),
-          _c(
-            "transition-group",
-            { attrs: { name: "fade" } },
-            _vm._l(_vm.basket, function(item) {
-              return _c("div", { key: item.bookable.id, staticClass: "py-1" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "pt-2 pb-1 flex justify-between border-t-2 border-fuchsia-600"
-                  },
-                  [
+      _vm.success
+        ? _c("success", [_vm._v("Congratulations on your purchase!")])
+        : _c(
+            "div",
+            {
+              staticClass:
+                "sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col"
+            },
+            [
+              _vm.itemsInBasket
+                ? _c("div", { staticClass: "col-start-1 col-end-3 w-full" }, [
                     _c(
-                      "span",
-                      { staticClass: "font-semibold" },
+                      "div",
+                      { staticClass: "bg-white shadow sm:rounded-lg mb-7" },
                       [
                         _c(
-                          "router-link",
+                          "section",
                           {
                             attrs: {
-                              to: {
-                                name: "bookable",
-                                params: { id: item.bookable.id }
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(item.bookable.title))]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "font-semibold" }, [
-                      _vm._v("$" + _vm._s(item.price.total))
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "py-1 flex justify-between" }, [
-                  _c("span", [_vm._v("From " + _vm._s(item.dates.from))]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("To " + _vm._s(item.dates.to))])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "py-1 text-right" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-outline-secondary",
-                      on: {
-                        click: function($event) {
-                          return _vm.$store.dispatch(
-                            "removeFromBasket",
-                            item.bookable.id
-                          )
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-trash-alt" })]
-                  )
-                ])
-              ])
-            }),
-            0
-          )
-        ],
-        1
-      )
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-start-1 col-end-3 w-full" }, [
-      _c("div", { staticClass: "bg-white shadow sm:rounded-lg mb-7" }, [
-        _c(
-          "section",
-          { attrs: { "aria-labelledby": "payment_details_heading" } },
-          [
-            _c("form", { attrs: { action: "#", method: "POST" } }, [
-              _c(
-                "div",
-                { staticClass: "shadow sm:rounded-md sm:overflow-hidden" },
-                [
-                  _c("div", { staticClass: "bg-white py-6 px-4 sm:p-6" }, [
-                    _c("div", [
-                      _c(
-                        "h2",
-                        {
-                          staticClass:
-                            "text-lg leading-6 font-medium text-gray-900",
-                          attrs: { id: "payment_details_heading" }
-                        },
-                        [_vm._v("Payment details")]
-                      ),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "mt-1 text-sm text-gray-500" }, [
-                        _vm._v(
-                          "Update your billing information. Please note that updating your location could affect your tax rates."
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "mt-6 grid grid-cols-4 gap-6" }, [
-                      _c("div", { staticClass: "col-span-4 sm:col-span-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "first_name" }
-                          },
-                          [_vm._v("First name")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "first_name",
-                            id: "first_name",
-                            autocomplete: "cc-given-name"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-4 sm:col-span-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "last_name" }
-                          },
-                          [_vm._v("Last name")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "last_name",
-                            id: "last_name",
-                            autocomplete: "cc-family-name"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-8 sm:col-span-4" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "email_address" }
-                          },
-                          [_vm._v("Email address")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "email_address",
-                            id: "email_address",
-                            autocomplete: "email"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-8 sm:col-span-4" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "email_address" }
-                          },
-                          [_vm._v("Address line 1")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "address_line_1",
-                            id: "address_line_1",
-                            autocomplete: "address_line_1"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-8 sm:col-span-4" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "email_address" }
-                          },
-                          [_vm._v("Address line 2")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "address_line_2",
-                            id: "address_line_2",
-                            autocomplete: "address_line_2"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-4 sm:col-span-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "first_name" }
-                          },
-                          [_vm._v("City")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "city",
-                            id: "city",
-                            autocomplete: "cc-city"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-4 sm:col-span-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "last_name" }
-                          },
-                          [_vm._v("State")]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "state",
-                            id: "state",
-                            autocomplete: "cc-state"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-4 sm:col-span-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "country" }
-                          },
-                          [_vm._v("Country / Region")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            staticClass:
-                              "mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                            attrs: {
-                              id: "country",
-                              name: "country",
-                              autocomplete: "country"
+                              "aria-labelledby": "payment_details_heading"
                             }
                           },
                           [
-                            _c("option", [_vm._v("United States")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Canada")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Mexico")])
+                            _c(
+                              "form",
+                              { attrs: { action: "#", method: "POST" } },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "shadow sm:rounded-md sm:overflow-hidden"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "bg-white py-6 px-4 sm:p-6"
+                                      },
+                                      [
+                                        _c("div", [
+                                          _c(
+                                            "h2",
+                                            {
+                                              staticClass:
+                                                "text-lg leading-6 font-medium text-gray-900",
+                                              attrs: {
+                                                id: "payment_details_heading"
+                                              }
+                                            },
+                                            [_vm._v("Payment details")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "mt-1 text-sm text-gray-500"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "Update your billing information. Please note that updating your location could affect your tax rates."
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "mt-6 grid grid-cols-4 gap-6"
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-4 sm:col-span-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: {
+                                                      for: "first_names"
+                                                    }
+                                                  },
+                                                  [_vm._v("First names")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.customer
+                                                          .first_names,
+                                                      expression:
+                                                        "customer.first_names"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.first_names"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "first_names",
+                                                    id: "first_names",
+                                                    autocomplete:
+                                                      "cc-given-name"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.customer.first_names
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "first_names",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.first_names"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-4 sm:col-span-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "last_name" }
+                                                  },
+                                                  [_vm._v("Last name")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.customer.last_name,
+                                                      expression:
+                                                        "customer.last_name"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.last_name"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "last_name",
+                                                    id: "last_name",
+                                                    autocomplete:
+                                                      "cc-family-name"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.customer.last_name
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "last_name",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.last_name"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-8 sm:col-span-4"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "email" }
+                                                  },
+                                                  [_vm._v("Email address")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value: _vm.customer.email,
+                                                      expression:
+                                                        "customer.email"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.email"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "email",
+                                                    id: "email",
+                                                    autocomplete: "email"
+                                                  },
+                                                  domProps: {
+                                                    value: _vm.customer.email
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "email",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.email"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-8 sm:col-span-4"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: {
+                                                      for: "address_line_1"
+                                                    }
+                                                  },
+                                                  [_vm._v("Address line 1")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.customer
+                                                          .address_line_1,
+                                                      expression:
+                                                        "customer.address_line_1"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.address_line_1"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "address_line_1",
+                                                    id: "address_line_1",
+                                                    autocomplete:
+                                                      "address_line_1"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.customer
+                                                        .address_line_1
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "address_line_1",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.address_line_1"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-8 sm:col-span-4"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: {
+                                                      for: "address_line_2"
+                                                    }
+                                                  },
+                                                  [_vm._v("Address line 2")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.customer
+                                                          .address_line_2,
+                                                      expression:
+                                                        "customer.address_line_2"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.address_line_2"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "address_line_2",
+                                                    id: "address_line_2",
+                                                    autocomplete:
+                                                      "address_line_2"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.customer
+                                                        .address_line_2
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "address_line_2",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.address_line_2"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-4 sm:col-span-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "city" }
+                                                  },
+                                                  [_vm._v("City")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value: _vm.customer.city,
+                                                      expression:
+                                                        "customer.city"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.city"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "city",
+                                                    id: "city",
+                                                    autocomplete: "cc-city"
+                                                  },
+                                                  domProps: {
+                                                    value: _vm.customer.city
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "city",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.city"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-4 sm:col-span-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "county" }
+                                                  },
+                                                  [_vm._v("County")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.customer.county,
+                                                      expression:
+                                                        "customer.county"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.county"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "county",
+                                                    id: "county",
+                                                    autocomplete: "cc-county"
+                                                  },
+                                                  domProps: {
+                                                    value: _vm.customer.county
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "county",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.county"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-4 sm:col-span-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "country" }
+                                                  },
+                                                  [_vm._v("Country / Region")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "select",
+                                                  {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.customer.country,
+                                                        expression:
+                                                          "customer.country"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                    class: [
+                                                      {
+                                                        "border-red-500": _vm.errorFor(
+                                                          "customer.country"
+                                                        )
+                                                      }
+                                                    ],
+                                                    attrs: {
+                                                      id: "country",
+                                                      name: "country",
+                                                      autocomplete: "country"
+                                                    },
+                                                    on: {
+                                                      change: function($event) {
+                                                        var $$selectedVal = Array.prototype.filter
+                                                          .call(
+                                                            $event.target
+                                                              .options,
+                                                            function(o) {
+                                                              return o.selected
+                                                            }
+                                                          )
+                                                          .map(function(o) {
+                                                            var val =
+                                                              "_value" in o
+                                                                ? o._value
+                                                                : o.value
+                                                            return val
+                                                          })
+                                                        _vm.$set(
+                                                          _vm.customer,
+                                                          "country",
+                                                          $event.target.multiple
+                                                            ? $$selectedVal
+                                                            : $$selectedVal[0]
+                                                        )
+                                                      }
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "option",
+                                                      {
+                                                        attrs: {
+                                                          disabled: "",
+                                                          value: ""
+                                                        }
+                                                      },
+                                                      [_vm._v("Please select")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c("option", [
+                                                      _vm._v("Canada")
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("option", [
+                                                      _vm._v("Mexico")
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("option", [
+                                                      _vm._v("United Kingdom")
+                                                    ]),
+                                                    _vm._v(" "),
+                                                    _c("option", [
+                                                      _vm._v("United States")
+                                                    ])
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.country"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-span-4 sm:col-span-2"
+                                              },
+                                              [
+                                                _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "block text-sm font-medium text-gray-700",
+                                                    attrs: { for: "postcode" }
+                                                  },
+                                                  [_vm._v("ZIP / Postal code")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.customer.postcode,
+                                                      expression:
+                                                        "customer.postcode"
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
+                                                  class: [
+                                                    {
+                                                      "border-red-500": _vm.errorFor(
+                                                        "customer.postcode"
+                                                      )
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    name: "postcode",
+                                                    id: "postcode",
+                                                    autocomplete: "postcode"
+                                                  },
+                                                  domProps: {
+                                                    value: _vm.customer.postcode
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.customer,
+                                                        "postcode",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                }),
+                                                _vm._v(" "),
+                                                _c("validation-errors", {
+                                                  attrs: {
+                                                    errors: _vm.errorFor(
+                                                      "customer.postcode"
+                                                    )
+                                                  }
+                                                })
+                                              ],
+                                              1
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "px-4 py-3 bg-gray-50 text-right sm:px-6"
+                                      },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900",
+                                            attrs: {
+                                              type: "submit",
+                                              disabled: _vm.loading
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                $event.preventDefault()
+                                                return _vm.book($event)
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                    Book now\n                                "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
                           ]
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-span-4 sm:col-span-2" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass:
-                              "block text-sm font-medium text-gray-700",
-                            attrs: { for: "postal_code" }
-                          },
-                          [_vm._v("ZIP / Postal code")]
-                        ),
+                      ]
+                    )
+                  ])
+                : _c("div", { staticClass: "col-start-1 col-end-3 w-full" }, [
+                    _c("div", { staticClass: "rounded-md bg-yellow-50 p-4" }, [
+                      _c("div", { staticClass: "flex" }, [
+                        _c("div", { staticClass: "flex-shrink-0" }, [
+                          _c(
+                            "svg",
+                            {
+                              staticClass: "h-5 w-5 text-yellow-400",
+                              attrs: {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 20 20",
+                                fill: "currentColor",
+                                "aria-hidden": "true"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  "fill-rule": "evenodd",
+                                  d:
+                                    "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
+                                  "clip-rule": "evenodd"
+                                }
+                              })
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
-                        _c("input", {
-                          staticClass:
-                            "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm",
-                          attrs: {
-                            type: "text",
-                            name: "postal_code",
-                            id: "postal_code",
-                            autocomplete: "postal-code"
-                          }
-                        })
+                        _c("div", { staticClass: "ml-3" }, [
+                          _c(
+                            "h3",
+                            {
+                              staticClass: "text-sm font-medium text-yellow-800"
+                            },
+                            [
+                              _vm._v(
+                                "\n                            Attention needed\n                        "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "mt-2 text-sm text-yellow-700" },
+                            [
+                              _c("p", [
+                                _vm._v(
+                                  "\n                                There are no items in the basket!\n                            "
+                                )
+                              ])
+                            ]
+                          )
+                        ])
                       ])
                     ])
                   ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "md:col-span-1 pl-5" },
+                [
+                  _c("div", { staticClass: "flex justify-between pb-2" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "font-semibold",
+                        staticStyle: { color: "gray" }
+                      },
+                      [_vm._v("Your Cart")]
+                    ),
+                    _vm._v(" "),
+                    _vm.itemsInBasket
+                      ? _c(
+                          "span",
+                          {
+                            staticClass:
+                              "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
+                          },
+                          [_vm._v("Items " + _vm._s(_vm.itemsInBasket))]
+                        )
+                      : _c(
+                          "span",
+                          {
+                            staticClass:
+                              "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
+                          },
+                          [_vm._v("Empty")]
+                        )
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "px-4 py-3 bg-gray-50 text-right sm:px-6" },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "bg-gray-800 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900",
-                          attrs: { type: "submit" }
-                        },
+                    "transition-group",
+                    { attrs: { name: "fade" } },
+                    _vm._l(_vm.basket, function(item) {
+                      return _c(
+                        "div",
+                        { key: item.bookable.id, staticClass: "py-1" },
                         [
-                          _vm._v(
-                            "\n                                Book now\n                            "
-                          )
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "pt-2 pb-1 flex justify-between border-t-2 border-fuchsia-600"
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "font-semibold" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      attrs: {
+                                        to: {
+                                          name: "bookable",
+                                          params: { id: item.bookable.id }
+                                        }
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(item.bookable.title))]
+                                  )
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "font-semibold" }, [
+                                _vm._v("$" + _vm._s(item.price.total))
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "py-1 flex justify-between" },
+                            [
+                              _c("span", [
+                                _vm._v("From " + _vm._s(item.dates.from))
+                              ]),
+                              _vm._v(" "),
+                              _c("span", [
+                                _vm._v("To " + _vm._s(item.dates.to))
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "py-1 text-right" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-sm btn-outline-secondary",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.$store.dispatch(
+                                      "removeFromBasket",
+                                      item.bookable.id
+                                    )
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-trash-alt" })]
+                            )
+                          ])
                         ]
                       )
-                    ]
+                    }),
+                    0
                   )
-                ]
+                ],
+                1
               )
-            ])
-          ]
-        )
-      ])
-    ])
-  }
-]
+            ]
+          )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44650,9 +45458,7 @@ var render = function() {
                           ])
                         ]
                       )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mt-4 text-muted warning" })
+                    : _vm._e()
                 ],
                 1
               )
@@ -64332,6 +65138,14 @@ __webpack_require__.r(__webpack_exports__);
           state = _ref2.state;
       commit('removeFromBasket', payload);
       localStorage.setItem('basket', JSON.stringify(state.basket));
+    },
+    clearBasket: function clearBasket(_ref3, payload) {
+      var commit = _ref3.commit,
+          state = _ref3.state;
+      commit("setBasket", {
+        items: []
+      });
+      localStorage.setItem("basket", JSON.stringify(state.basket));
     }
   },
   getters: {
