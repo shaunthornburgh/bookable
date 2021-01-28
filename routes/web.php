@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+Auth::routes();
+
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::get('/{all}', function () {
     return view('index');
 })->where('all', '^(?!api\/)[\/\w\.-]*');
