@@ -30,6 +30,11 @@ const routes = [
         path: "/basket",
         component: Basket,
         name: "basket"
+    },
+    {
+        path: "/auth/login",
+        component: require("./auth/Login").default,
+        name: "login"
     }
 ];
 

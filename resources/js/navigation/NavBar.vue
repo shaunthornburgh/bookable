@@ -53,7 +53,6 @@
                         </button>
                     </router-link>
 
-                    <!-- Profile dropdown -->
                     <account-dropdown></account-dropdown>
                 </div>
             </div>
