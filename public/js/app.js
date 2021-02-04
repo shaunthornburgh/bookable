@@ -1920,8 +1920,16 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _navigation_NavBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navigation/NavBar */ "./resources/js/navigation/NavBar.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _navigation_NavBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./navigation/NavBar */ "./resources/js/navigation/NavBar.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1943,16 +1951,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    NavBar: _navigation_NavBar__WEBPACK_IMPORTED_MODULE_1__["default"]
+    NavBar: _navigation_NavBar__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       lastSearch: this.$store.state.lastSearch
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     lastSearchComputed: "lastSearch"
-  }))
+  })),
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                try {
+                  axios.post("/logout");
+
+                  _this.$store.dispatch("logout");
+                } catch (error) {
+                  _this.$store.dispatch("logout");
+                }
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -3121,6 +3155,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3149,12 +3190,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isOpen: false
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    isLoggedIn: "isLoggedIn"
+  })),
   created: function created() {
     var _this = this;
 
@@ -46408,31 +46472,77 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "ml-3 relative" }, [
     _c("div", [
-      _c(
-        "button",
-        {
-          staticClass:
-            "relative z-10 bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-          attrs: { id: "user-menu", "aria-haspopup": "true" },
-          on: {
-            click: function($event) {
-              _vm.isOpen = !_vm.isOpen
-            }
-          }
-        },
-        [
-          _c("span", { staticClass: "sr-only" }, [_vm._v("Open user menu")]),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "h-8 w-8 rounded-full",
-            attrs: {
-              src:
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-              alt: ""
-            }
-          })
-        ]
-      ),
+      !_vm.isLoggedIn
+        ? _c(
+            "button",
+            {
+              staticClass:
+                "relative z-10 bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+              attrs: { id: "user-menu", "aria-haspopup": "true" },
+              on: {
+                click: function($event) {
+                  _vm.isOpen = !_vm.isOpen
+                }
+              }
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass:
+                    "inline-block h-8 w-8 rounded-full overflow-hidden bg-gray-100"
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "h-full w-full text-gray-300",
+                      attrs: { fill: "currentColor", viewBox: "0 0 24 24" }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
+                        }
+                      })
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLoggedIn
+        ? _c(
+            "button",
+            {
+              staticClass:
+                "relative z-10 bg-white rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+              attrs: { id: "user-menu", "aria-haspopup": "true" },
+              on: {
+                click: function($event) {
+                  _vm.isOpen = !_vm.isOpen
+                }
+              }
+            },
+            [
+              _c("span", { staticClass: "sr-only" }, [
+                _vm._v("Open user menu")
+              ]),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "h-8 w-8 rounded-full",
+                attrs: {
+                  src:
+                    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+                  alt: ""
+                }
+              })
+            ]
+          )
+        : _vm._e(),
       _vm._v(" "),
       _vm.isOpen
         ? _c("button", {
@@ -46460,46 +46570,79 @@ var render = function() {
             }
           },
           [
-            _c(
-              "a",
-              {
-                staticClass:
-                  "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
-                attrs: { href: "#", role: "menuitem" }
-              },
-              [_vm._v("Profile")]
-            ),
+            !_vm.isLoggedIn
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+                    attrs: { to: { name: "login" }, role: "menuitem" }
+                  },
+                  [_vm._v("Sign-in")]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
-                attrs: { href: "#", role: "menuitem" }
-              },
-              [_vm._v("Settings")]
-            ),
+            !_vm.isLoggedIn
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+                    attrs: { to: { name: "register" }, role: "menuitem" }
+                  },
+                  [_vm._v("Register")]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
-                attrs: { href: "#", role: "menuitem" }
-              },
-              [_vm._v("Bookings")]
-            ),
+            _vm.isLoggedIn
+              ? _c(
+                  "a",
+                  {
+                    staticClass:
+                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+                    attrs: { href: "#", role: "menuitem" }
+                  },
+                  [_vm._v("Profile")]
+                )
+              : _vm._e(),
             _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
-                attrs: { href: "#", role: "menuitem" }
-              },
-              [_vm._v("Sign out")]
-            )
-          ]
+            _vm.isLoggedIn
+              ? _c(
+                  "a",
+                  {
+                    staticClass:
+                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+                    attrs: { href: "#", role: "menuitem" }
+                  },
+                  [_vm._v("Settings")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isLoggedIn
+              ? _c(
+                  "a",
+                  {
+                    staticClass:
+                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+                    attrs: { href: "#", role: "menuitem" }
+                  },
+                  [_vm._v("Bookings")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isLoggedIn
+              ? _c(
+                  "a",
+                  {
+                    staticClass:
+                      "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100",
+                    attrs: { href: "#", role: "menuitem" }
+                  },
+                  [_vm._v("Sign out")]
+                )
+              : _vm._e()
+          ],
+          1
         )
       : _vm._e()
   ])
@@ -64205,6 +64348,15 @@ Vue.component("warning", _shared_components_alerts_Warning__WEBPACK_IMPORTED_MOD
 Vue.component("success", _shared_components_alerts_Success__WEBPACK_IMPORTED_MODULE_9__["default"]);
 Vue.component("validation-errors", _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_10__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store(_store__WEBPACK_IMPORTED_MODULE_11__["default"]);
+window.axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (401 === error.response.status) {
+    store.dispatch("logout");
+  }
+
+  return Promise.reject(error);
+});
 var app = new Vue({
   el: '#app',
   router: _routes__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -65688,6 +65840,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (basket) {
         context.commit('setBasket', JSON.parse(basket));
       }
+
+      context.commit("setLoggedIn", Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_1__["isLoggedIn"])());
     },
     addToBasket: function addToBasket(_ref, payload) {
       var commit = _ref.commit,

@@ -24,8 +24,18 @@
         },
         computed: {
             ...mapState({
-                lastSearchComputed: "lastSearch"
+                lastSearchComputed: "lastSearch",
             })
+        },
+        methods: {
+            async logout() {
+                try {
+                    axios.post("/logout");
+                    this.$store.dispatch("logout");
+                } catch (error) {
+                    this.$store.dispatch("logout");
+                }
+            }
         }
     };
 </script>
