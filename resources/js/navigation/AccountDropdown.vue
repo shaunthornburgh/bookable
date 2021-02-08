@@ -40,7 +40,12 @@
             <a v-if="isLoggedIn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
             <a v-if="isLoggedIn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Settings</a>
             <a v-if="isLoggedIn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Bookings</a>
-            <a v-if="isLoggedIn" href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sign out</a>
+            <a v-if="isLoggedIn"
+               href="#"
+               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+               role="menuitem"
+               @click.prevent="logout"
+            >Sign out</a>
         </div>
     </div>
 </template>
@@ -71,6 +76,16 @@
             this.$once('hook:beforeDestroy', () => {
                 document.removeEventListener('keydown', handleEscape);
             })
+        },
+        methods: {
+            async logout() {
+                try {
+                    axios.post("/logout");
+                    this.$store.dispatch("logout");
+                } catch (error) {
+                    this.$store.dispatch("logout");
+                }
+            }
         }
     };
 </script>
