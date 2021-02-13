@@ -44820,7 +44820,7 @@ var render = function() {
         {
           staticClass: "mt-6 text-center text-3xl font-extrabold text-gray-900"
         },
-        [_vm._v("\n            Sign in to your account\n        ")]
+        [_vm._v("\n            Register for a free account\n        ")]
       ),
       _vm._v(" "),
       _c(
