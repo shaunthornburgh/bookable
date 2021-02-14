@@ -3292,6 +3292,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3463,17 +3476,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -47015,6 +47017,8 @@ var render = function() {
     _vm.loading
       ? _c("div", [_vm._v("\n        Data is loading\n    ")])
       : _c("div", [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "div",
             {
@@ -47032,7 +47036,48 @@ var render = function() {
         ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-10 sm:mt-12" }, [
+      _c("form", { attrs: { action: "#" } }, [
+        _c("div", { staticClass: "sm:flex" }, [
+          _c("div", { staticClass: "min-w-0 flex-1" }, [
+            _c(
+              "label",
+              { staticClass: "sr-only", attrs: { for: "location" } },
+              [_vm._v("Where would you like to stay?")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass:
+                "block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-rose-500 focus:ring-indigo-500",
+              attrs: {
+                id: "location",
+                type: "location",
+                placeholder: "Where would you like to stay?"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-3 sm:mt-0 sm:ml-3" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "block w-full py-3 px-4 rounded-md inline-flex items-center justify-center border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Search")]
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -47332,7 +47377,38 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass:
+              "flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "flex-shrink-0 flex items-center" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn nav-button",
+                    attrs: { to: { name: "home" } }
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "block lg:block h-8 w-auto",
+                      attrs: {
+                        src: "/images/bookable-logo.svg",
+                        alt: "Workflow"
+                      }
+                    })
+                  ]
+                )
+              ],
+              1
+            )
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -47384,87 +47460,10 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(0)
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
-      },
-      [
-        _c("div", { staticClass: "flex-shrink-0 flex items-center" }, [
-          _c("img", {
-            staticClass: "block lg:hidden h-8 w-auto",
-            attrs: {
-              src:
-                "https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg",
-              alt: "Workflow"
-            }
-          }),
-          _vm._v(" "),
-          _c("img", {
-            staticClass: "hidden lg:block h-8 w-auto",
-            attrs: {
-              src:
-                "https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg",
-              alt: "Workflow"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "hidden sm:ml-6 sm:flex sm:space-x-8" }, [
-          _c(
-            "a",
-            {
-              staticClass:
-                "border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
-              attrs: { href: "#" }
-            },
-            [
-              _vm._v(
-                "\n                        Search properties\n                    "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass:
-                "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
-              attrs: { href: "#" }
-            },
-            [
-              _vm._v(
-                "\n                        Become a host\n                    "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass:
-                "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium",
-              attrs: { href: "#" }
-            },
-            [
-              _vm._v(
-                "\n                        Earn referral commissions\n                    "
-              )
-            ]
-          )
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
