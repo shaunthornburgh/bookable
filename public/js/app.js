@@ -2915,6 +2915,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -3238,27 +3240,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     title: String,
     description: String,
-    price: 1000,
-    id: Number
+    picture: String,
+    price: Number,
+    id: Number,
+    bedrooms: Number,
+    bathrooms: Number,
+    reviewCount: Number,
+    rating: Number
   },
   mounted: function mounted() {}
 });
@@ -3275,15 +3267,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BookableListItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookableListItem */ "./resources/js/bookables/BookableListItem.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _SearchFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchFilters */ "./resources/js/bookables/SearchFilters.vue");
 //
 //
 //
@@ -3306,23 +3290,181 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BookableListItem: _BookableListItem__WEBPACK_IMPORTED_MODULE_0__["default"]
+    BookableListItem: _BookableListItem__WEBPACK_IMPORTED_MODULE_0__["default"],
+    SearchFilters: _SearchFilters__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
       bookables: null,
-      loading: false
+      filters: null,
+      loading: false,
+      selectedFilters: null
     };
+  },
+  methods: {
+    updateSearch: function updateSearch(selectedFilters) {
+      var _this = this;
+
+      this.selectedFilters = selectedFilters;
+      var refreshRequest = axios.get('/api/bookables', {
+        params: {
+          search: 'search-string',
+          bedrooms: this.selectedFilters.bedrooms,
+          bathrooms: this.selectedFilters.bathrooms,
+          priceRange: 2000,
+          propertyType: 3,
+          amenities: '1,3,5'
+        }
+      }).then(function (response) {
+        _this.bookables = response.data.data;
+        _this.loading = false;
+      });
+    },
+    getBookables: function getBookables() {
+      var _this2 = this;
+
+      this.loading = true;
+      var bookablesRequest = axios.get('/api/bookables', {
+        params: {
+          search: 'search-string',
+          bedrooms: 0,
+          bathrooms: 0,
+          priceRange: 2000,
+          propertyType: 3,
+          amenities: '1,3,5'
+        }
+      }).then(function (response) {
+        _this2.bookables = response.data.data;
+        _this2.loading = false;
+      });
+    }
+  },
+  created: function created() {
+    this.getBookables();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/bookables/SearchFilters.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/bookables/SearchFilters.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      isOpen: false,
+      availableFilters: {
+        amenities: Object,
+        bathrooms: Array,
+        bedrooms: Array,
+        priceRanges: Array,
+        propertyTypes: Object
+      },
+      selectedFilters: {
+        amenities: [],
+        bathrooms: 0,
+        bedrooms: 0,
+        priceRanges: 0,
+        propertyTypes: 0
+      }
+    };
+  },
+  methods: {
+    toggle: function toggle() {
+      this.isOpen = !this.isOpen;
+    },
+    updateSearch: function updateSearch() {
+      this.$emit('update-search', this.selectedFilters);
+    }
   },
   created: function created() {
     var _this = this;
 
-    this.loading = true;
-    var request = axios.get('/api/bookables').then(function (response) {
-      _this.bookables = response.data.data;
-      _this.loading = false;
+    var filtersRequest = axios.get('/api/filters').then(function (response) {
+      _this.availableFilters = response.data;
     });
   }
 });
@@ -3528,20 +3670,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3550,7 +3678,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])({
     itemsInBasket: "itemsInBasket"
-  }))
+  })),
+  data: function data() {
+    return {
+      isOpen: false
+    };
+  },
+  methods: {
+    toggle: function toggle() {
+      this.isOpen = !this.isOpen;
+    }
+  }
 });
 
 /***/ }),
@@ -44522,7 +44660,10 @@ var render = function() {
       _c("main", [
         _c(
           "div",
-          { staticClass: "max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6" },
+          {
+            staticClass:
+              "min-h-screen bg-gray-200 antialiased xl:flex xl:flex-col xl:h-screen"
+          },
           [_c("router-view")],
           1
         )
@@ -45182,6 +45323,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6 mt-4" },
     [
       _vm.success
         ? _c("success", [_vm._v("Congratulations on your purchase!")])
@@ -46378,167 +46520,181 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.loading
-    ? _c(
-        "div",
-        [
-          _c("gallery", { attrs: { "bookable-id": this.$route.params.id } }),
-          _vm._v(" "),
-          _c(
+  return _c(
+    "div",
+    { staticClass: "max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6 mt-4" },
+    [
+      !_vm.loading
+        ? _c(
             "div",
-            {
-              staticClass:
-                "sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col"
-            },
             [
-              _c(
-                "div",
-                { staticClass: "col-start-1 col-end-3 w-full" },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "bg-white shadow sm:rounded-lg mb-7" },
-                    [
-                      _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
-                        _c(
-                          "h2",
-                          {
-                            staticClass:
-                              "text-lg leading-6 font-medium text-gray-900",
-                            attrs: { id: "bookable-details-title" }
-                          },
-                          [_vm._v(_vm._s(_vm.bookable.title))]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "border-t border-gray-200 px-4 py-5 sm:px-6"
-                        },
-                        [_c("p", [_vm._v(_vm._s(_vm.bookable.description))])]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("review-list", {
-                    attrs: { "bookable-id": this.$route.params.id }
-                  })
-                ],
-                1
-              ),
+              _c("gallery", {
+                attrs: { "bookable-id": this.$route.params.id }
+              }),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "md:col-span-1" },
+                {
+                  staticClass:
+                    "sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col"
+                },
                 [
-                  _c("availability", {
-                    staticClass: "mb-4",
-                    attrs: { "bookable-id": this.$route.params.id },
-                    on: {
-                      availability: function($event) {
-                        return _vm.checkPrice($event)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
                   _c(
-                    "transition",
-                    { attrs: { name: "fade" } },
+                    "div",
+                    { staticClass: "col-start-1 col-end-3 w-full" },
                     [
-                      _vm.price
-                        ? _c("price-breakdown", {
-                            staticClass: "mb-4",
-                            attrs: { price: _vm.price }
-                          })
-                        : _vm._e()
+                      _c(
+                        "div",
+                        { staticClass: "bg-white shadow sm:rounded-lg mb-7" },
+                        [
+                          _c("div", { staticClass: "px-4 py-5 sm:px-6" }, [
+                            _c(
+                              "h2",
+                              {
+                                staticClass:
+                                  "text-lg leading-6 font-medium text-gray-900",
+                                attrs: { id: "bookable-details-title" }
+                              },
+                              [_vm._v(_vm._s(_vm.bookable.title))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "border-t border-gray-200 px-4 py-5 sm:px-6"
+                            },
+                            [
+                              _c("p", [
+                                _vm._v(_vm._s(_vm.bookable.description))
+                              ])
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("review-list", {
+                        attrs: { "bookable-id": this.$route.params.id }
+                      })
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _c("transition", { attrs: { name: "fade" } }, [
-                    _c("div", { staticClass: "sm:pl-3" }, [
-                      _vm.price
-                        ? _c(
-                            "button",
-                            {
-                              staticClass:
-                                "justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full",
-                              attrs: {
-                                type: "button",
-                                disabled: _vm.inBasketAlready
+                  _c(
+                    "div",
+                    { staticClass: "md:col-span-1" },
+                    [
+                      _c("availability", {
+                        staticClass: "mb-4",
+                        attrs: { "bookable-id": this.$route.params.id },
+                        on: {
+                          availability: function($event) {
+                            return _vm.checkPrice($event)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "transition",
+                        { attrs: { name: "fade" } },
+                        [
+                          _vm.price
+                            ? _c("price-breakdown", {
+                                staticClass: "mb-4",
+                                attrs: { price: _vm.price }
+                              })
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("transition", { attrs: { name: "fade" } }, [
+                        _c("div", { staticClass: "sm:pl-3" }, [
+                          _vm.price
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full",
+                                  attrs: {
+                                    type: "button",
+                                    disabled: _vm.inBasketAlready
+                                  },
+                                  on: { click: _vm.addToBasket }
+                                },
+                                [_vm._v("Book now")]
+                              )
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.inBasketAlready
+                        ? _c("div", { staticClass: "sm:pl-3 sm:my-3" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full",
+                                attrs: { type: "button" },
+                                on: { click: _vm.removeFromBasket }
                               },
-                              on: { click: _vm.addToBasket }
+                              [_vm._v("Remove from basket")]
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.inBasketAlready
+                        ? _c(
+                            "div",
+                            {
+                              staticClass: "rounded-md bg-yellow-50 p-4 sm:ml-3"
                             },
-                            [_vm._v("Book now")]
+                            [
+                              _c("div", { staticClass: "flex" }, [
+                                _c("div", { staticClass: "flex-shrink-0" }, [
+                                  _c(
+                                    "svg",
+                                    {
+                                      staticClass: "h-5 w-5 text-yellow-400",
+                                      attrs: {
+                                        "x-description":
+                                          "Heroicon name: exclamation",
+                                        xmlns: "http://www.w3.org/2000/svg",
+                                        viewBox: "0 0 20 20",
+                                        fill: "currentColor",
+                                        "aria-hidden": "true"
+                                      }
+                                    },
+                                    [
+                                      _c("path", {
+                                        attrs: {
+                                          "fill-rule": "evenodd",
+                                          d:
+                                            "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
+                                          "clip-rule": "evenodd"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(0)
+                              ])
+                            ]
                           )
                         : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm.inBasketAlready
-                    ? _c("div", { staticClass: "sm:pl-3 sm:my-3" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "justify-center inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full",
-                            attrs: { type: "button" },
-                            on: { click: _vm.removeFromBasket }
-                          },
-                          [_vm._v("Remove from basket")]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.inBasketAlready
-                    ? _c(
-                        "div",
-                        { staticClass: "rounded-md bg-yellow-50 p-4 sm:ml-3" },
-                        [
-                          _c("div", { staticClass: "flex" }, [
-                            _c("div", { staticClass: "flex-shrink-0" }, [
-                              _c(
-                                "svg",
-                                {
-                                  staticClass: "h-5 w-5 text-yellow-400",
-                                  attrs: {
-                                    "x-description":
-                                      "Heroicon name: exclamation",
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    viewBox: "0 0 20 20",
-                                    fill: "currentColor",
-                                    "aria-hidden": "true"
-                                  }
-                                },
-                                [
-                                  _c("path", {
-                                    attrs: {
-                                      "fill-rule": "evenodd",
-                                      d:
-                                        "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
-                                      "clip-rule": "evenodd"
-                                    }
-                                  })
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(0)
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                ],
-                1
+                    ],
+                    1
+                  )
+                ]
               )
-            ]
+            ],
+            1
           )
-        ],
-        1
-      )
-    : _c("div", [_vm._v("Loading ...")])
+        : _c("div", [_vm._v("Loading ...")])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -46549,7 +46705,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "mt-2 text-sm text-yellow-700" }, [
         _c("p", [
           _vm._v(
-            "\n                                It seems like you've added this object to basket already. If you want to change dates, remove from the basket first.\n                            "
+            "\n                                    It seems like you've added this object to basket already. If you want to change dates, remove from the basket first.\n                                "
           )
         ])
       ])
@@ -46858,140 +47014,115 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "flex flex-col rounded-lg shadow-lg overflow-hidden" },
+    "router-link",
+    {
+      staticClass: "block",
+      attrs: { to: { name: "bookable", params: { id: _vm.id } } }
+    },
     [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "flex-1 bg-white p-6 flex flex-col justify-between" },
-        [
+      _c("div", [
+        _c("div", { staticClass: "relative pb-5/6" }, [
+          _c("img", {
+            staticClass:
+              "absolute inset-0 h-full w-full rounded-lg shadow-md object-cover",
+            attrs: { src: _vm.picture, alt: "" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "relative px-4 -mt-16" }, [
           _c(
             "div",
-            { staticClass: "flex-1" },
+            { staticClass: "bg-white rounded-lg px-4 py-4 shadow-lg" },
             [
+              _c("div", { staticClass: "flex items-baseline" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass:
+                      "inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide text-xs"
+                  },
+                  [_vm._v("Plus")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "ml-2 text-xs text-gray-600 font-semibold uppercase tracking-wide"
+                  },
+                  [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.bedrooms) +
+                        " " +
+                        _vm._s(_vm.bedrooms === 1 ? "bed" : "beds") +
+                        " • " +
+                        _vm._s(_vm.bathrooms) +
+                        " " +
+                        _vm._s(_vm.bathrooms === 1 ? "bath" : "baths") +
+                        "\n          "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
               _c(
-                "router-link",
-                {
-                  staticClass: "block",
-                  attrs: { to: { name: "bookable", params: { id: _vm.id } } }
-                },
+                "h4",
+                { staticClass: "mt-1 text-gray-900 font-semibold text-lg" },
+                [_vm._v(_vm._s(_vm.title))]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "mt-1" }, [
+                _c("span", { staticClass: "text-gray-900" }, [
+                  _vm._v("£" + _vm._s(_vm.price))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-1 text-sm text-gray-600" }, [
+                  _vm._v("/night")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mt-2 flex items-center text-sm text-gray-600" },
                 [
-                  _c(
-                    "h3",
-                    {
-                      staticClass:
-                        "mt-2 text-xl leading-7 font-semibold text-gray-900"
-                    },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.title) +
-                          "\n                "
-                      )
-                    ]
-                  ),
+                  _vm._l(5, function(i) {
+                    return _c(
+                      "svg",
+                      {
+                        staticClass: "h-4 w-4 fill-current",
+                        class:
+                          _vm.rating >= i ? "text-teal-500" : "text-gray-400",
+                        attrs: {
+                          viewBox: "0 0 24 24",
+                          xmlns: "http://www.w3.org/2000/svg"
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M8.128 19.825a1.586 1.586 0 0 1-1.643-.117 1.543 1.543 0 0 1-.53-.662 1.515 1.515 0 0 1-.096-.837l.736-4.247-3.13-3a1.514 1.514 0 0 1-.39-1.569c.09-.271.254-.513.475-.698.22-.185.49-.306.776-.35L8.66 7.73l1.925-3.862c.128-.26.328-.48.577-.633a1.584 1.584 0 0 1 1.662 0c.25.153.45.373.577.633l1.925 3.847 4.334.615c.29.042.562.162.785.348.224.186.39.43.48.704a1.514 1.514 0 0 1-.404 1.58l-3.13 3 .736 4.247c.047.282.014.572-.096.837-.111.265-.294.494-.53.662a1.582 1.582 0 0 1-1.643.117l-3.865-2-3.865 2z"
+                          }
+                        })
+                      ]
+                    )
+                  }),
                   _vm._v(" "),
-                  _c(
-                    "p",
-                    { staticClass: "mt-3 text-base leading-6 text-gray-500" },
-                    [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(_vm.description) +
-                          "\n                "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "p",
-                    { staticClass: "mt-3 text-base leading-6 text-gray-500" },
-                    [
-                      _vm._v(
-                        "\n                    £" +
-                          _vm._s(_vm.price) +
-                          " per night\n                "
-                      )
-                    ]
-                  )
-                ]
+                  _c("span", { staticClass: "ml-2" }, [
+                    _vm._v(_vm._s(_vm.reviewCount) + " reviews")
+                  ])
+                ],
+                2
               )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm._m(1)
-        ]
-      )
+            ]
+          )
+        ])
+      ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex-shrink-0" }, [
-      _c("img", {
-        staticClass: "h-48 w-full object-cover",
-        attrs: {
-          src:
-            "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-          alt: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-6 flex items-center" }, [
-      _c("div", { staticClass: "flex-shrink-0" }, [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("img", {
-            staticClass: "h-10 w-10 rounded-full",
-            attrs: {
-              src:
-                "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-              alt: ""
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "ml-3" }, [
-        _c(
-          "p",
-          { staticClass: "text-sm leading-5 font-medium text-gray-900" },
-          [
-            _c("a", { staticClass: "hover:underline", attrs: { href: "#" } }, [
-              _vm._v(
-                "\n                        Roel Aufderhar\n                    "
-              )
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex text-sm leading-5 text-gray-500" }, [
-          _c("time", { attrs: { datetime: "2020-03-16" } }, [
-            _vm._v(
-              "\n                        Mar 16, 2020\n                    "
-            )
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "mx-1" }, [
-            _vm._v("\n              ·\n            ")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("\n              6 min read\n            ")])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -47013,71 +47144,595 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.loading
-      ? _c("div", [_vm._v("\n        Data is loading\n    ")])
-      : _c("div", [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none"
-            },
-            _vm._l(_vm.bookables, function(bookable, index) {
-              return _c(
-                "bookable-list-item",
-                _vm._b({ key: index }, "bookable-list-item", bookable, false)
+  return _c(
+    "div",
+    { staticClass: "xl:flex-1 xl:flex xl:overflow-y-hidden" },
+    [
+      _c(
+        "SearchFilters",
+        _vm._b(
+          { on: { "update-search": _vm.updateSearch } },
+          "SearchFilters",
+          _vm.filters,
+          false
+        )
+      ),
+      _vm._v(" "),
+      _c("main", { staticClass: "py-6 xl:flex-1 xl:overflow-x-hidden" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm.loading
+          ? _c("div", [_vm._v("\n        Data is loading\n    ")])
+          : _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "mt-12 p-4 grid gap-5 max-w-lg mx-auto lg:grid-cols-4 lg:max-w-none"
+                },
+                _vm._l(_vm.bookables, function(bookable, index) {
+                  return _c(
+                    "bookable-list-item",
+                    _vm._b(
+                      { key: index },
+                      "bookable-list-item",
+                      bookable,
+                      false
+                    )
+                  )
+                }),
+                1
               )
-            }),
-            1
-          )
-        ])
-  ])
+            ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-10 sm:mt-12" }, [
-      _c("form", { attrs: { action: "#" } }, [
-        _c("div", { staticClass: "sm:flex" }, [
-          _c("div", { staticClass: "min-w-0 flex-1" }, [
-            _c(
-              "label",
-              { staticClass: "sr-only", attrs: { for: "location" } },
-              [_vm._v("Where would you like to stay?")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              staticClass:
-                "block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-rose-500 focus:ring-indigo-500",
-              attrs: {
-                id: "location",
-                type: "location",
-                placeholder: "Where would you like to stay?"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mt-3 sm:mt-0 sm:ml-3" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "block w-full py-3 px-4 rounded-md inline-flex items-center justify-center border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500",
-                attrs: { type: "submit" }
-              },
-              [_vm._v("Search")]
-            )
-          ])
-        ])
+    return _c("div", { staticClass: "px-4 xl:px-8" }, [
+      _c("h3", { staticClass: "text-gray-900 text-xl" }, [
+        _vm._v("Los Angeles")
+      ]),
+      _c("p", { staticClass: "text-gray-600" }, [
+        _vm._v(
+          "Live like the stars in these luxurious Southern California estates."
+        )
       ])
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/bookables/SearchFilters.vue?vue&type=template&id=54824374&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/bookables/SearchFilters.vue?vue&type=template&id=54824374& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "bg-gray-800 xl:w-72" }, [
+    _c("div", { staticClass: "flex justify-between px-4 py-3 xl:hidden" }, [
+      _c("div", { staticClass: "relative max-w-xs w-full" }, [
+        _c(
+          "div",
+          { staticClass: "absolute inset-y-0 left-0 flex items-center pl-3" },
+          [
+            _c(
+              "svg",
+              {
+                staticClass: "h-6 w-6 fill-current text-gray-600",
+                attrs: {
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  xmlns: "http://www.w3.org/2000/svg"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d:
+                      "M16.32 14.9l1.1 1.1c.4-.02.83.13 1.14.44l3 3a1.5 1.5 0 0 1-2.12 2.12l-3-3a1.5 1.5 0 0 1-.44-1.14l-1.1-1.1a8 8 0 1 1 1.41-1.41l.01-.01zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+                  }
+                })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          staticClass:
+            "block w-full bg-gray-900 focus:outline-none focus:bg-white focus:text-gray-900 text-white rounded-lg pl-10 pr-4 py-2",
+          attrs: { placeholder: "Search by keywords" }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass:
+            "ml-4 inline-flex items-center hover:bg-gray-600 focus:outline-none focus:shadow-outline rounded-lg shadow pl-3 pr-4",
+          class: { "bg-gray-600": _vm.isOpen, "bg-gray-700": !_vm.isOpen },
+          attrs: { type: "button" },
+          on: { click: _vm.toggle }
+        },
+        [
+          _c(
+            "svg",
+            {
+              staticClass: "h-6 w-6 fill-current text-gray-500",
+              attrs: {
+                viewBox: "0 0 24 24",
+                xmlns: "http://www.w3.org/2000/svg"
+              }
+            },
+            [
+              _c("path", {
+                attrs: {
+                  d:
+                    "M3 6a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1zm3 6a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H7a1 1 0 0 1-1-1zm4 5a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-4z"
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c("span", { staticClass: "ml-1 text-white font-medium" }, [
+            _vm._v("Filters")
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass:
+          "xl:block xl:h-full xl:flex xl:flex-col xl:justify-between",
+        class: { hidden: !_vm.isOpen, block: _vm.isOpen }
+      },
+      [
+        _c("div", { staticClass: "lg:flex xl:block xl:overflow-y-auto" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "px-4 py-4 border-t border-gray-900 lg:w-1/3 xl:border-t-0 xl:w-full"
+            },
+            [
+              _c("div", { staticClass: "flex flex-wrap -mx-2" }, [
+                _c(
+                  "label",
+                  { staticClass: "block w-1/2 px-2 sm:w-1/4 lg:w-1/2" },
+                  [
+                    _c(
+                      "span",
+                      { staticClass: "text-sm font-semibold text-gray-500" },
+                      [_vm._v("Bedrooms")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedFilters.bedrooms,
+                            expression: "selectedFilters.bedrooms"
+                          }
+                        ],
+                        staticClass:
+                          "mt-1 form-select block w-full text-white shadow focus:bg-gray-600",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.selectedFilters,
+                              "bedrooms",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "0" } }, [
+                          _vm._v("Any")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.availableFilters.bedrooms, function(
+                          bedroom,
+                          index
+                        ) {
+                          return _c("option", { key: index }, [
+                            _vm._v(_vm._s(bedroom))
+                          ])
+                        })
+                      ],
+                      2
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "block w-1/2 px-2 sm:w-1/4 lg:w-1/2" },
+                  [
+                    _c(
+                      "span",
+                      { staticClass: "text-sm font-semibold text-gray-500" },
+                      [_vm._v("Bathrooms")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedFilters.bathrooms,
+                            expression: "selectedFilters.bathrooms"
+                          }
+                        ],
+                        staticClass:
+                          "mt-1 form-select block w-full text-white shadow focus:bg-gray-600",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.selectedFilters,
+                              "bathrooms",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "0" } }, [
+                          _vm._v("Any")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.availableFilters.bathrooms, function(
+                          bathroom,
+                          index
+                        ) {
+                          return _c(
+                            "option",
+                            { key: index, domProps: { value: bathroom } },
+                            [_vm._v(_vm._s(bathroom))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass:
+                      "mt-4 block w-full px-2 sm:mt-0 sm:w-1/2 lg:mt-4 lg:w-full"
+                  },
+                  [
+                    _c(
+                      "span",
+                      { staticClass: "text-sm font-semibold text-gray-500" },
+                      [_vm._v("Price Range")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedFilters.priceRanges,
+                            expression: "selectedFilters.priceRanges"
+                          }
+                        ],
+                        staticClass:
+                          "mt-1 form-select block w-full text-white shadow focus:bg-gray-600",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.selectedFilters,
+                              "priceRanges",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "0" } }, [
+                          _vm._v("Any")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.availableFilters.priceRanges, function(
+                          priceRange,
+                          index
+                        ) {
+                          return _c(
+                            "option",
+                            { key: index, domProps: { value: priceRange } },
+                            [_vm._v("Up to $" + _vm._s(priceRange) + "/night")]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "px-4 py-4 border-t border-gray-900 lg:w-1/3 lg:border-l xl:w-full"
+            },
+            [
+              _c(
+                "span",
+                { staticClass: "block text-sm font-semibold text-gray-500" },
+                [_vm._v("Property Type")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "sm:flex sm:-mx-2 lg:block lg:mx-0" },
+                [
+                  _c(
+                    "label",
+                    {
+                      staticClass:
+                        "mt-3 sm:w-1/4 sm:px-2 flex items-center lg:w-full lg:px-0"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedFilters.propertyTypes,
+                            expression: "selectedFilters.propertyTypes"
+                          }
+                        ],
+                        staticClass: "form-radio bg-gray-900 focus:bg-gray-700",
+                        attrs: {
+                          type: "radio",
+                          name: "propertyType",
+                          value: "0"
+                        },
+                        domProps: {
+                          checked: _vm._q(
+                            _vm.selectedFilters.propertyTypes,
+                            "0"
+                          )
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.selectedFilters,
+                              "propertyTypes",
+                              "0"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2 text-white" }, [
+                        _vm._v("Any")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.availableFilters.propertyTypes, function(
+                    propertyType,
+                    index
+                  ) {
+                    return _c(
+                      "label",
+                      {
+                        key: index,
+                        staticClass:
+                          "mt-3 sm:w-1/4 sm:px-2 flex items-center lg:w-full lg:px-0"
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedFilters.propertyTypes,
+                              expression: "selectedFilters.propertyTypes"
+                            }
+                          ],
+                          staticClass:
+                            "form-radio bg-gray-900 focus:bg-gray-700",
+                          attrs: { type: "radio", name: "propertyType" },
+                          domProps: {
+                            value: propertyType,
+                            checked: _vm._q(
+                              _vm.selectedFilters.propertyTypes,
+                              propertyType
+                            )
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.$set(
+                                _vm.selectedFilters,
+                                "propertyTypes",
+                                propertyType
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ml-2 text-white" }, [
+                          _vm._v(_vm._s(propertyType))
+                        ])
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "px-4 py-4 border-t border-gray-900 lg:w-1/3 lg:border-l xl:w-full"
+            },
+            [
+              _c(
+                "span",
+                { staticClass: "block text-sm font-semibold text-gray-500" },
+                [_vm._v("Amenities")]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "sm:flex sm:-mx-2 sm:flex-wrap" },
+                _vm._l(_vm.availableFilters.amenities, function(
+                  amenity,
+                  index
+                ) {
+                  return _c(
+                    "label",
+                    {
+                      key: index,
+                      staticClass:
+                        "mt-3 flex items-center sm:w-1/4 sm:px-2 lg:w-1/2 xl:w-full"
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedFilters.amenities,
+                            expression: "selectedFilters.amenities"
+                          }
+                        ],
+                        staticClass:
+                          "form-checkbox bg-gray-900 focus:bg-gray-700",
+                        attrs: { type: "checkbox", name: "balcony" },
+                        domProps: {
+                          value: index,
+                          checked: Array.isArray(_vm.selectedFilters.amenities)
+                            ? _vm._i(_vm.selectedFilters.amenities, index) > -1
+                            : _vm.selectedFilters.amenities
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.selectedFilters.amenities,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = index,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.selectedFilters,
+                                    "amenities",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.selectedFilters,
+                                    "amenities",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.selectedFilters, "amenities", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2 text-white" }, [
+                        _vm._v(_vm._s(amenity))
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "bg-gray-900 px-4 py-4 sm:text-right" }, [
+          _c(
+            "button",
+            {
+              staticClass:
+                "block w-full sm:w-auto sm:inline-block bg-indigo-500 hover:bg-indigo-400 font-semibold text-white px-4 py-2 rounded-lg xl:block xl:w-full",
+              attrs: { type: "button" },
+              on: { click: _vm.updateSearch }
+            },
+            [_vm._v("Update results")]
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -47304,213 +47959,252 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { staticClass: "bg-white shadow mb-7" }, [
-    _c("div", { staticClass: "max-w-7xl mx-auto px-2 sm:px-6 lg:px-8" }, [
-      _c("div", { staticClass: "relative flex justify-between h-16" }, [
-        _c(
-          "div",
-          {
-            staticClass: "absolute inset-y-0 left-0 flex items-center sm:hidden"
-          },
-          [
+  return _c(
+    "header",
+    {
+      staticClass:
+        "bg-gray-900 sm:flex sm:items-center sm:justify-between xl:bg-white"
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "flex justify-between px-4 py-3 xl:w-72 xl:bg-gray-900 xl:justify-center xl:py-5"
+        },
+        [
+          _c(
+            "div",
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn nav-button",
+                  attrs: { to: { name: "home" } }
+                },
+                [
+                  _c("img", {
+                    staticClass: "block lg:block h-8 w-auto",
+                    attrs: { src: "/images/bookable-logo.svg", alt: "Workflow" }
+                  })
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex sm:hidden" }, [
             _c(
               "button",
               {
                 staticClass:
-                  "inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500",
-                attrs: { "aria-expanded": "false" }
+                  "px-2 text-gray-500 hover:text-white focus:outline-none focus:text-white",
+                attrs: { type: "button" },
+                on: { click: _vm.toggle }
               },
               [
-                _c("span", { staticClass: "sr-only" }, [
-                  _vm._v("Open main menu")
-                ]),
-                _vm._v(" "),
                 _c(
                   "svg",
                   {
-                    staticClass: "block h-6 w-6",
+                    staticClass: "h-6 w-6 fill-current",
                     attrs: {
                       xmlns: "http://www.w3.org/2000/svg",
-                      fill: "none",
-                      viewBox: "0 0 24 24",
-                      stroke: "currentColor",
-                      "aria-hidden": "true"
+                      viewBox: "0 0 24 24"
                     }
                   },
                   [
-                    _c("path", {
-                      attrs: {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d: "M4 6h16M4 12h16M4 18h16"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "svg",
-                  {
-                    staticClass: "hidden h-6 w-6",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      fill: "none",
-                      viewBox: "0 0 24 24",
-                      stroke: "currentColor",
-                      "aria-hidden": "true"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        "stroke-linecap": "round",
-                        "stroke-linejoin": "round",
-                        "stroke-width": "2",
-                        d: "M6 18L18 6M6 6l12 12"
-                      }
-                    })
+                    _vm.isOpen
+                      ? _c("path", {
+                          attrs: {
+                            "fill-rule": "evenodd",
+                            "clip-rule": "evenodd",
+                            d:
+                              "M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.isOpen
+                      ? _c("path", {
+                          attrs: {
+                            "fill-rule": "evenodd",
+                            d:
+                              "M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
+                          }
+                        })
+                      : _vm._e()
                   ]
                 )
               ]
             )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
-          },
-          [
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "nav",
+        {
+          staticClass:
+            "sm:flex sm:items-center sm:px-4 xl:flex-1 xl:justify-between",
+          class: { hidden: !_vm.isOpen, block: _vm.isOpen }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "hidden xl:block xl:relative xl:max-w-xs xl:w-full"
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "absolute inset-y-0 left-0 flex items-center pl-3"
+                },
+                [
+                  _c(
+                    "svg",
+                    {
+                      staticClass: "h-6 w-6 fill-current text-gray-600",
+                      attrs: {
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        xmlns: "http://www.w3.org/2000/svg"
+                      }
+                    },
+                    [
+                      _c("path", {
+                        attrs: {
+                          d:
+                            "M16.32 14.9l1.1 1.1c.4-.02.83.13 1.14.44l3 3a1.5 1.5 0 0 1-2.12 2.12l-3-3a1.5 1.5 0 0 1-.44-1.14l-1.1-1.1a8 8 0 1 1 1.41-1.41l.01-.01zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"
+                        }
+                      })
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                staticClass:
+                  "block w-full border border-transparent bg-gray-200 focus:outline-none focus:bg-white focus:border-gray-300 text-gray-900 rounded-lg pl-10 pr-4 py-2",
+                attrs: { placeholder: "Search by keywords" }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "sm:flex sm:items-center" }, [
             _c(
               "div",
-              { staticClass: "flex-shrink-0 flex items-center" },
+              {
+                staticClass:
+                  "px-2 pt-2 pb-5 border-b border-gray-800 sm:flex sm:border-b-0 sm:py-0 sm:px-0"
+              },
               [
                 _c(
                   "router-link",
                   {
                     staticClass: "btn nav-button",
-                    attrs: { to: { name: "home" } }
+                    attrs: { to: { name: "basket" } }
                   },
                   [
-                    _c("img", {
-                      staticClass: "block lg:block h-8 w-auto",
-                      attrs: {
-                        src: "/images/bookable-logo.svg",
-                        alt: "Workflow"
-                      }
-                    })
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out relative overflow-visible",
+                        attrs: { "aria-label": "Notifications" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("View basket")
+                        ]),
+                        _vm._v(" "),
+                        _c("i", { staticClass: "fas fa-shopping-basket" }),
+                        _vm._v(" "),
+                        _vm.itemsInBasket
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
+                              },
+                              [_vm._v(_vm._s(_vm.itemsInBasket))]
+                            )
+                          : _vm._e()
+                      ]
+                    )
                   ]
-                )
+                ),
+                _vm._v(" "),
+                _c("account-dropdown")
               ],
               1
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-          },
-          [
-            _c(
-              "router-link",
-              {
-                staticClass: "btn nav-button",
-                attrs: { to: { name: "basket" } }
-              },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:text-gray-500 focus:bg-gray-100 transition duration-150 ease-in-out relative overflow-visible",
-                    attrs: { "aria-label": "Notifications" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("View basket")
-                    ]),
-                    _vm._v(" "),
-                    _c("i", { staticClass: "fas fa-shopping-basket" }),
-                    _vm._v(" "),
-                    _vm.itemsInBasket
-                      ? _c(
-                          "span",
-                          {
-                            staticClass:
-                              "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
-                          },
-                          [_vm._v(_vm._s(_vm.itemsInBasket))]
-                        )
-                      : _vm._e()
-                  ]
-                )
-              ]
             ),
             _vm._v(" "),
-            _c("account-dropdown")
-          ],
-          1
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+            _vm._m(0)
+          ])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "hidden sm:hidden" }, [
-      _c("div", { staticClass: "pt-2 pb-4 space-y-1" }, [
-        _c(
-          "a",
-          {
+    return _c(
+      "div",
+      { staticClass: "relative px-5 py-5 sm:py-0 sm:ml-4 sm:px-0" },
+      [
+        _c("div", { staticClass: "flex items-center sm:hidden" }, [
+          _c("img", {
             staticClass:
-              "bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium",
-            attrs: { href: "#" }
-          },
-          [_vm._v("Dashboard")]
-        ),
+              "h-10 w-10 object-cover rounded-full border-2 border-gray-600",
+            attrs: {
+              src:
+                "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80",
+              alt: ""
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "span",
+            { staticClass: "ml-4 font-semibold text-gray-200 sm:hidden" },
+            [_vm._v("Isla Schoger")]
+          )
+        ]),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium",
-            attrs: { href: "#" }
-          },
-          [_vm._v("Team")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium",
-            attrs: { href: "#" }
-          },
-          [_vm._v("Projects")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass:
-              "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium",
-            attrs: { href: "#" }
-          },
-          [_vm._v("Calendar")]
-        )
-      ])
-    ])
+        _c("div", { staticClass: "mt-5 sm:hidden" }, [
+          _c(
+            "a",
+            {
+              staticClass: "block text-gray-400 hover:text-white",
+              attrs: { href: "#account" }
+            },
+            [_vm._v("Account settings")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "mt-3 block text-gray-400 hover:text-white",
+              attrs: { href: "#support" }
+            },
+            [_vm._v("Support")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "mt-3 block text-gray-400 hover:text-white",
+              attrs: { href: "#sign-out" }
+            },
+            [_vm._v("Sign out")]
+          )
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -65754,6 +66448,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/bookables/SearchFilters.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/bookables/SearchFilters.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchFilters_vue_vue_type_template_id_54824374___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchFilters.vue?vue&type=template&id=54824374& */ "./resources/js/bookables/SearchFilters.vue?vue&type=template&id=54824374&");
+/* harmony import */ var _SearchFilters_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchFilters.vue?vue&type=script&lang=js& */ "./resources/js/bookables/SearchFilters.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SearchFilters_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchFilters_vue_vue_type_template_id_54824374___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchFilters_vue_vue_type_template_id_54824374___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/bookables/SearchFilters.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/bookables/SearchFilters.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/bookables/SearchFilters.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchFilters_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SearchFilters.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/bookables/SearchFilters.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchFilters_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/bookables/SearchFilters.vue?vue&type=template&id=54824374&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/bookables/SearchFilters.vue?vue&type=template&id=54824374& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchFilters_vue_vue_type_template_id_54824374___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SearchFilters.vue?vue&type=template&id=54824374& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/bookables/SearchFilters.vue?vue&type=template&id=54824374&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchFilters_vue_vue_type_template_id_54824374___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchFilters_vue_vue_type_template_id_54824374___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -66604,8 +67367,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/shaunthornburgh/Development/laravelbnb/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/shaunthornburgh/Development/laravelbnb/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/arkadiy/Valet/bookable/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/arkadiy/Valet/bookable/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
