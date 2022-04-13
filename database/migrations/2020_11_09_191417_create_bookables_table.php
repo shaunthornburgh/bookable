@@ -15,9 +15,15 @@ class CreateBookablesTable extends Migration
     {
         Schema::create('bookables', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('description');
+            $table->unsignedInteger('price');
+            $table->unsignedTinyInteger('property_type');
+            $table->unsignedTinyInteger('bedrooms');
+            $table->unsignedTinyInteger('bathrooms');
+            $table->timestamp('moderated_at')->nullable();
+            $table->timestamps();
         });
     }
 
