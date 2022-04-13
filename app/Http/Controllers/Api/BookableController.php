@@ -16,7 +16,12 @@ class BookableController extends Controller
      */
     public function index()
     {
-        return BookableIndexResource::collection(Bookable::all());
+        $bookables = Bookable::filtered(
+            request()->input('bedrooms'),
+            request()->input('bathrooms')
+        )->get();
+
+        return BookableIndexResource::collection($bookables);
     }
 
     /**

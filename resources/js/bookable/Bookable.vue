@@ -1,4 +1,5 @@
 <template>
+<div class="max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6 mt-4">
     <div v-if="!loading">
         <gallery :bookable-id="this.$route.params.id"></gallery>
         <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col">
@@ -64,6 +65,7 @@
         </div>
     </div>
     <div v-else>Loading ...</div>
+    </div>
 </template>
 
 <script>

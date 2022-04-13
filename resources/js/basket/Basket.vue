@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6 mt-4">
         <success v-if="success">Congratulations on your purchase!</success>
         <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col" v-else>
             <div class="col-start-1 col-end-3 w-full" v-if="itemsInBasket">

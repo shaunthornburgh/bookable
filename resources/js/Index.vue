@@ -2,7 +2,7 @@
     <div>
         <nav-bar></nav-bar>
         <main>
-            <div class="max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6">
+            <div class="min-h-screen bg-gray-200 antialiased xl:flex xl:flex-col xl:h-screen">
                 <router-view></router-view>
             </div>
         </main>

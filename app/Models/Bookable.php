@@ -3,12 +3,21 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Tags\HasTags;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Bookable extends Model
+class Bookable extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia, HasTags;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('picture');
+        $this->addMediaCollection('gallery');
+    }
 
     public function bookings()
     {
@@ -20,9 +29,14 @@ class Bookable extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function images()
+    public function getRatingAttribute()
     {
-        return $this->hasMany(Image::class);
+        return 4;
+    }
+
+    public function getReviewCountAttribute()
+    {
+        return 100;
     }
 
     public function availableFor($from, $to): bool
@@ -41,5 +55,20 @@ class Bookable extends Model
                 $this->price => $days
             ]
         ];
+    }
+
+    public function scopeFiltered($query, $bedrooms, $bathrooms){
+        $query
+            ->when($bedrooms, function($query) use ($bedrooms){
+                $query->whereBedrooms($bedrooms);
+            })
+
+            ->when($bathrooms, function($query) use ($bathrooms){
+                $query->whereBathrooms($bathrooms);
+            });
+
+            // $query->withAllTags(['kid-friendly']);
+
+        return $query;
     }
 }
