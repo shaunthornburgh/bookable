@@ -1,4 +1,20 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/webfonts/fa-brands-400.ttf": "/webfonts/fa-brands-400.ttf",
+    "/webfonts/fa-brands-400.woff2": "/webfonts/fa-brands-400.woff2",
+    "/webfonts/fa-regular-400.ttf": "/webfonts/fa-regular-400.ttf",
+    "/webfonts/fa-regular-400.woff2": "/webfonts/fa-regular-400.woff2",
+    "/webfonts/fa-solid-900.ttf": "/webfonts/fa-solid-900.ttf",
+    "/webfonts/fa-solid-900.woff2": "/webfonts/fa-solid-900.woff2",
+    "/webfonts/fa-v4compatibility.ttf": "/webfonts/fa-v4compatibility.ttf",
+    "/webfonts/fa-v4compatibility.woff2": "/webfonts/fa-v4compatibility.woff2",
+    "/images/arrow-left.svg": "/images/arrow-left.svg",
+    "/images/bookable-logo.svg": "/images/bookable-logo.svg",
+    "/images/dots.svg": "/images/dots.svg",
+    "/images/photo-1472099645785-5658abf4ff4e": "/images/photo-1472099645785-5658abf4ff4e",
+    "/images/photo-1496128858413-b36217c2ce36": "/images/photo-1496128858413-b36217c2ce36",
+    "/images/photo-icon.svg": "/images/photo-icon.svg",
+    "/images/workflow-logo-on-white.svg": "/images/workflow-logo-on-white.svg",
+    "/images/workflow-mark-on-white.svg": "/images/workflow-mark-on-white.svg"
 }

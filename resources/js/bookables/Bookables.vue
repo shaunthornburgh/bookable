@@ -7,7 +7,7 @@
             Data is loading
         </div>
         <div v-else>
-            <div class="mt-12 p-4 grid gap-5 max-w-lg mx-auto lg:grid-cols-4 lg:max-w-none">
+            <div class="mt-12 p-4 grid gap-5 max-w-lg mx-auto xl:grid-cols-3 2xl:grid-cols-4 lg:max-w-none">
                 <bookable-list-item
                     v-bind="bookable"
                     v-for="(bookable, index) in bookables"

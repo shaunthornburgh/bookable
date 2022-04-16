@@ -1,11 +1,9 @@
 <template>
-    <div>
+    <div class="min-h-screen bg-gray-200 antialiased xl:flex xl:flex-col xl:h-screen">
         <nav-bar></nav-bar>
-        <main>
-            <div class="min-h-screen bg-gray-200 antialiased xl:flex xl:flex-col xl:h-screen">
-                <router-view></router-view>
-            </div>
-        </main>
+        <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 

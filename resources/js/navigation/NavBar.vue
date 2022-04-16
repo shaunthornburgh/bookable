@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-gray-900 sm:flex sm:items-center sm:justify-between xl:bg-white">
+  <header class="bg-gray-900 sm:flex sm:items-center sm:justify-between xl:bg-white xl:flex-shrink-0">
     <div class="flex justify-between px-4 py-3 xl:w-72 xl:bg-gray-900 xl:justify-center xl:py-5">
       <div>
         <router-link class="btn nav-button" :to="{name: 'home'}">
