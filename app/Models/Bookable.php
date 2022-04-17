@@ -32,7 +32,7 @@ class Bookable extends Model implements HasMedia
 
     public function getRatingAttribute()
     {
-        return $this->reviews()->avg('rating');
+        return floatval( $this->reviews()->avg('rating') );
     }
 
     public function getReviewCountAttribute()
