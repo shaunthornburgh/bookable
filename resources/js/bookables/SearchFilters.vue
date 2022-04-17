@@ -50,7 +50,7 @@
               <span class="ml-2 text-white">Any</span>
             </label>
             <label v-for="(propertyType, index) in availableFilters.propertyTypes" :key="index" class="mt-3 sm:w-1/4 sm:px-2 flex items-center lg:w-full lg:px-0">
-              <input class="form-radio bg-gray-900 focus:bg-gray-700" type="radio" name="propertyType" :value="propertyType" v-model="selectedFilters.propertyTypes">
+              <input class="form-radio bg-gray-900 focus:bg-gray-700" type="radio" name="propertyType" :value="index" v-model="selectedFilters.propertyTypes">
               <span class="ml-2 text-white">{{ propertyType }}</span>
             </label>
           </div>
@@ -99,6 +99,7 @@ export default {
     },
     updateSearch(){
       this.$emit('update-search', this.selectedFilters)
+      this.isOpen = false
     }
   },
   created() {

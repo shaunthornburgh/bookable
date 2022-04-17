@@ -2,7 +2,7 @@
     <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
         <SearchFilters v-bind="filters" v-on:update-search="updateSearch"/>
         <main class="py-6 xl:flex-1 xl:overflow-x-hidden">
-            <div class="px-4 xl:px-8"><h3 class="text-gray-900 text-xl">Los Angeles</h3><p class="text-gray-600">Live like the stars in these luxurious Southern California estates.</p></div>
+            <div class="px-4 xl:px-8"><h3 class="text-gray-900 text-xl">Where do you want to stay</h3><p class="text-gray-600">Probably we need some header here</p></div>
         <div v-if = "loading">
             Data is loading
         </div>
@@ -45,9 +45,9 @@
                     search: 'search-string',
                     bedrooms: this.selectedFilters.bedrooms,
                     bathrooms: this.selectedFilters.bathrooms,
-                    priceRange: 2000,
-                    propertyType: 3,
-                    amenities: '1,3,5',
+                    priceRange: this.selectedFilters.priceRanges,
+                    propertyType: this.selectedFilters.propertyTypes,
+                    amenities: this.selectedFilters.amenities.join(),
                   }
                 })
                 .then(response => {
@@ -59,16 +59,7 @@
             this.loading = true;
 
             const bookablesRequest = axios
-                .get('/api/bookables', {
-                  params: {
-                    search: 'search-string',
-                    bedrooms: 0,
-                    bathrooms: 0,
-                    priceRange: 2000,
-                    propertyType: 3,
-                    amenities: '1,3,5',
-                  }
-                })
+                .get('/api/bookables')
                 .then(response => {
                     this.bookables = response.data.data;
                     this.loading = false;

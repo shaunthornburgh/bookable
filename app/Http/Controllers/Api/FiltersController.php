@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Spatie\Tags\Tag;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Bookable;
 
 class FiltersController extends Controller
 {
@@ -15,30 +17,14 @@ class FiltersController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $bookables = Bookable::all();
+
         return response()->json([
-            'bedrooms' => [
-                1,
-                2,
-                4
-            ],
-            'bathrooms' => [
-                1,
-                2,
-                4
-            ],
-            'propertyTypes' => [
-                1 => 'House',
-                2 => 'Apartment',
-                3 => 'Loft'
-            ],
-            'priceRanges' => [
-                2000, 3000, 40000
-            ],
-            'amenities' => [
-                1 => 'Balcony',
-                2 => 'Pool',
-                3 => 'Beach'
-            ]
+            'bedrooms' => $bookables->unique('bedrooms')->sortBy('bedrooms')->pluck('bedrooms'),
+            'bathrooms' => $bookables->unique('bathrooms')->sortBy('bathrooms')->pluck('bathrooms'),
+            'propertyTypes' => config('bookable.propertyTypes'),
+            'priceRanges' => collect(config('bookable.priceRanges'))->keys(),
+            'amenities' => Tag::getWithType('amenities')->pluck('name', 'id')
         ]);
     }
 }

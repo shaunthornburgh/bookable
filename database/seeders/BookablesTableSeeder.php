@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Spatie\Tags\Tag;
 use App\Models\Bookable;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Seeder;
@@ -38,6 +39,12 @@ class BookablesTableSeeder extends Seeder
         $bookables = Bookable::factory()
             ->times(30)
             ->create();
+        
+        $tags = collect();
+
+        foreach($this->amenities as $amenity){
+            $tags->push(Tag::findOrCreate( $amenity, 'amenities'));
+        }
 
         foreach($bookables as $bookable){
             $bookable
@@ -56,9 +63,10 @@ class BookablesTableSeeder extends Seeder
             ->addMediaFromUrl(Arr::random($this->images_from_unsplash))
             ->toMediaCollection('gallery');
 
-            for($i = 1; $i <= rand(0, 5); $i++){
-                $bookable->attachTag(Arr::random($this->amenities));
-            }
+            $bookable->attachTag($tags->random());
+            $bookable->attachTag($tags->random());
+            $bookable->attachTag($tags->random());
+            $bookable->attachTag($tags->random());
 
         }
 
