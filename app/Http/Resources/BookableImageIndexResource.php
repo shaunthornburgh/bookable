@@ -15,7 +15,7 @@ class BookableImageIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'path' => $this->path
+            'path' => $this->original_url
         ];
     }
 }

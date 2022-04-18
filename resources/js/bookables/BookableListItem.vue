@@ -1,49 +1,34 @@
+
+   
 <template>
-    <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
-        <div class="flex-shrink-0">
-            <img class="h-48 w-full object-cover" src="https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80" alt="">
-        </div>
-        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
-            <div class="flex-1">
-                <router-link :to="{ name: 'bookable', params: { id } }" class="block">
-                    <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">
-                        {{ title }}
-                    </h3>
-                    <p class="mt-3 text-base leading-6 text-gray-500">
-                        {{ description }}
-                    </p>
-                    <p class="mt-3 text-base leading-6 text-gray-500">
-                        £{{ price }} per night
-                    </p>
-                </router-link>
-            </div>
-            <div class="mt-6 flex items-center">
-                <div class="flex-shrink-0">
-                    <a href="#">
-                        <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                    </a>
-                </div>
-                <div class="ml-3">
-                    <p class="text-sm leading-5 font-medium text-gray-900">
-                        <a href="#" class="hover:underline">
-                            Roel Aufderhar
-                        </a>
-                    </p>
-                    <div class="flex text-sm leading-5 text-gray-500">
-                        <time datetime="2020-03-16">
-                            Mar 16, 2020
-                        </time>
-                        <span class="mx-1">
-                  &middot;
-                </span>
-                        <span>
-                  6 min read
-                </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+<router-link :to="{ name: 'bookable', params: { id } }" class="block">
+  <div>
+    <div class="relative pb-5/6">
+      <img class="absolute inset-0 h-full w-full rounded-lg shadow-md object-cover" :src="picture" alt="">
     </div>
+    <div class="relative px-4 -mt-16">
+      <div class="bg-white rounded-lg px-4 py-4 shadow-lg">
+        <div class="flex items-baseline">
+          <span class="inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide text-xs">Plus</span>
+          <div class="ml-2 text-xs text-gray-600 font-semibold uppercase tracking-wide">
+            {{ bedrooms }} {{ bedrooms === 1 ? 'bed' : 'beds' }} &bull; {{ bathrooms }} {{ bathrooms === 1 ? 'bath' : 'baths' }}
+          </div>
+        </div>
+        <h4 class="mt-1 text-gray-900 font-semibold text-lg">{{ title }}</h4>
+        <div class="mt-1">
+          <span class="text-gray-900">£{{ price }}</span>
+          <span class="ml-1 text-sm text-gray-600">/night</span>
+        </div>
+        <div class="mt-2 flex items-center text-sm text-gray-600">
+          <svg v-for="i in 5" class="h-4 w-4 fill-current" :class="rating >= i ? 'text-teal-500' : 'text-gray-400'" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.128 19.825a1.586 1.586 0 0 1-1.643-.117 1.543 1.543 0 0 1-.53-.662 1.515 1.515 0 0 1-.096-.837l.736-4.247-3.13-3a1.514 1.514 0 0 1-.39-1.569c.09-.271.254-.513.475-.698.22-.185.49-.306.776-.35L8.66 7.73l1.925-3.862c.128-.26.328-.48.577-.633a1.584 1.584 0 0 1 1.662 0c.25.153.45.373.577.633l1.925 3.847 4.334.615c.29.042.562.162.785.348.224.186.39.43.48.704a1.514 1.514 0 0 1-.404 1.58l-3.13 3 .736 4.247c.047.282.014.572-.096.837-.111.265-.294.494-.53.662a1.582 1.582 0 0 1-1.643.117l-3.865-2-3.865 2z"/>
+          </svg>
+          <span class="ml-2">{{ reviewCount }} reviews</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  </router-link>
 </template>
 
 <script>
@@ -51,8 +36,13 @@
         props: {
             title: String,
             description: String,
-            price: 1000,
+            picture: String,
+            price: Number,
             id: Number,
+            bedrooms: Number,
+            bathrooms: Number,
+            reviewCount: Number,
+            rating: Number,
         },
         mounted() {
 

@@ -3,12 +3,22 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Tags\Tag;
+use Spatie\Tags\HasTags;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Bookable extends Model
+class Bookable extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia, HasTags;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('picture');
+        $this->addMediaCollection('gallery');
+    }
 
     public function bookings()
     {
@@ -20,9 +30,14 @@ class Bookable extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function images()
+    public function getRatingAttribute()
     {
-        return $this->hasMany(Image::class);
+        return floatval( $this->reviews()->avg('rating') );
+    }
+
+    public function getReviewCountAttribute()
+    {
+        return $this->reviews()->count();
     }
 
     public function availableFor($from, $to): bool
@@ -41,5 +56,32 @@ class Bookable extends Model
                 $this->price => $days
             ]
         ];
+    }
+
+    public function scopeFiltered($query, $bedrooms, $bathrooms, $priceRange, $propertyType, $amenities){
+        $query
+            ->when($bedrooms, function($query) use ($bedrooms){
+                $query->whereBedrooms($bedrooms);
+            })
+
+            ->when($bathrooms, function($query) use ($bathrooms){
+                $query->whereBathrooms($bathrooms);
+            })
+
+            ->when($priceRange, function($query) use ($priceRange){
+                $rangeFromToArray = config("bookable.priceRanges.{$priceRange}");
+                $query->whereBetween('price', $rangeFromToArray);
+            })
+
+            ->when($propertyType, function($query) use ($propertyType){
+                $query->wherePropertyType($propertyType);
+            })
+
+            ->when($amenities, function($query) use ($amenities){
+                $tags = Tag::findMany( explode(',', $amenities) );
+                $query->withAllTags($tags);
+            });
+
+        return $query;
     }
 }

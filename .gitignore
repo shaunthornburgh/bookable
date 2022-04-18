@@ -12,3 +12,7 @@ npm-debug.log
 yarn-error.log
 .vagrant
 .idea
+/public/js
+/public/css
+/public/webfonts
+/public/images

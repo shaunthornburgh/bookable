@@ -17,7 +17,13 @@ class BookableIndexResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'description' => $this->description
+            'description' => $this->description,
+            'price' => $this->price,
+            'bedrooms' => $this->bedrooms,
+            'bathrooms' => $this->bathrooms,
+            'picture' => $this->getFirstMediaUrl('picture'),
+            'rating' => $this->rating,
+            'reviewCount' => $this->reviewCount,
         ];
     }
 }

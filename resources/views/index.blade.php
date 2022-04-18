@@ -9,10 +9,10 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="antialiased bg-gray-100">
-        <div id="app" class="wrapper">
+    <body>
+        <div id="app">
             <index></index>
         </div>
     </body>

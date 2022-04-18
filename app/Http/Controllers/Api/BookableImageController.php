@@ -20,7 +20,7 @@ class BookableImageController extends Controller
         $bookable = Bookable::findOrFail($id);
 
         return BookableImageIndexResource::collection(
-            $bookable->images()->get()
+            $bookable->getMedia('gallery')
         );
     }
 }

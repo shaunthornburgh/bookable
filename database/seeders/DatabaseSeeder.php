@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             BookablesTableSeeder::class,
             BookingsTableSeeder::class,
             ReviewsTableSeeder::class,
-            ImagesTableSeeder::class
         ]);
     }
 }

@@ -1,5 +1,6 @@
 require('./bootstrap');
 
+import Vue from 'vue'
 import VueRouter from "vue-router";
 import Vuex from 'vuex';
 import router from "./routes";
@@ -12,7 +13,7 @@ import Success from "./shared/components/alerts/Success";
 import ValidationErrors from "./shared/components/ValidationErrors";
 import storeDefinition from "./store";
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(Vuex);
 

@@ -1,23 +1,13 @@
 <template>
-    <div>
+    <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
+        <SearchFilters v-bind="filters" v-on:update-search="updateSearch"/>
+        <main class="py-6 xl:flex-1 xl:overflow-x-hidden">
+            <div class="px-4 xl:px-8"><h3 class="text-gray-900 text-xl">Where do you want to stay</h3><p class="text-gray-600">Probably we need some header here</p></div>
         <div v-if = "loading">
             Data is loading
         </div>
         <div v-else>
-            <div class="mt-10 sm:mt-12">
-                <form action="#" class="">
-                    <div class="sm:flex">
-                        <div class="min-w-0 flex-1">
-                            <label for="location" class="sr-only">Where would you like to stay?</label>
-                            <input id="location" type="location" placeholder="Where would you like to stay?" class="block w-full border border-gray-300 rounded-md px-5 py-3 text-base text-gray-900 placeholder-gray-500 shadow-sm focus:border-rose-500 focus:ring-indigo-500">
-                        </div>
-                        <div class="mt-3 sm:mt-0 sm:ml-3">
-                            <button type="submit" class="block w-full py-3 px-4 rounded-md inline-flex items-center justify-center border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Search</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="mt-12 grid gap-5 max-w-lg mx-auto lg:grid-cols-3 lg:max-w-none">
+            <div class="mt-12 p-4 grid gap-5 max-w-lg mx-auto xl:grid-cols-3 2xl:grid-cols-4 lg:max-w-none">
                 <bookable-list-item
                     v-bind="bookable"
                     v-for="(bookable, index) in bookables"
@@ -25,31 +15,59 @@
                 ></bookable-list-item>
             </div>
         </div>
+        </main>
     </div>
 </template>
 
 <script>
     import BookableListItem from "./BookableListItem";
+    import SearchFilters from "./SearchFilters";
 
     export default {
         components: {
-            BookableListItem
+            BookableListItem,
+            SearchFilters
         },
         data() {
             return {
                 bookables: null,
-                loading: false
+                filters: null,
+                loading: false,
+                selectedFilters: null
             }
         },
-        created() {
+        methods: {
+          updateSearch(selectedFilters){
+            this.selectedFilters = selectedFilters
+                const refreshRequest = axios
+                .get('/api/bookables', {
+                  params: {
+                    search: 'search-string',
+                    bedrooms: this.selectedFilters.bedrooms,
+                    bathrooms: this.selectedFilters.bathrooms,
+                    priceRange: this.selectedFilters.priceRanges,
+                    propertyType: this.selectedFilters.propertyTypes,
+                    amenities: this.selectedFilters.amenities.join(),
+                  }
+                })
+                .then(response => {
+                    this.bookables = response.data.data;
+                    this.loading = false;
+                });
+          },
+          getBookables(){
             this.loading = true;
 
-            const request = axios
+            const bookablesRequest = axios
                 .get('/api/bookables')
                 .then(response => {
                     this.bookables = response.data.data;
                     this.loading = false;
                 });
+          }
+        },
+        created() {
+          this.getBookables()
         }
     }
 </script>

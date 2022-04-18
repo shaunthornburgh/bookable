@@ -16,7 +16,16 @@ class BookableController extends Controller
      */
     public function index()
     {
-        return BookableIndexResource::collection(Bookable::all());
+        // TODO validation 
+        $bookables = Bookable::filtered(
+            request()->input('bedrooms'),
+            request()->input('bathrooms'),
+            request()->input('priceRange'),
+            request()->input('propertyType'),
+            request()->input('amenities'),
+        )->get();
+
+        return BookableIndexResource::collection($bookables);
     }
 
     /**
