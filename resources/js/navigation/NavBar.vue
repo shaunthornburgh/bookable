@@ -25,6 +25,42 @@
         </router-link>
       </div>
       <div class="flex sm:hidden">
+                  <router-link class="btn nav-button" :to="{ name: 'basket' }">
+            <button
+              aria-label="Notifications"
+              class="
+                p-1
+                border-2 border-transparent
+                text-gray-400
+                rounded-full
+                hover:text-gray-500
+                focus:outline-none focus:text-gray-500 focus:bg-gray-100
+                transition
+                duration-150
+                ease-in-out
+                relative
+                overflow-visible
+              "
+            >
+              <span class="sr-only">View basket  MOBILE</span>
+              <i class="fas fa-shopping-basket"></i>
+              <span
+                v-if="itemsInBasket"
+                class="
+                  inline-flex
+                  items-center
+                  px-2.5
+                  py-0.5
+                  rounded-full
+                  text-xs
+                  font-medium
+                  bg-indigo-100
+                  text-indigo-800
+                "
+                >{{ itemsInBasket }}</span
+              >
+            </button>
+          </router-link>
         <button
           @click="toggle"
           type="button"
@@ -97,6 +133,7 @@
             pb-5
             border-b border-gray-800
             sm:flex sm:border-b-0 sm:py-0 sm:px-0
+            hidden
           "
         >
           <router-link class="btn nav-button" :to="{ name: 'basket' }">
@@ -116,7 +153,7 @@
                 overflow-visible
               "
             >
-              <span class="sr-only">View basket</span>
+              <span class="sr-only">View basket DESKTOP</span>
               <i class="fas fa-shopping-basket"></i>
               <span
                 v-if="itemsInBasket"

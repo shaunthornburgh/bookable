@@ -1,6 +1,7 @@
 <template>
   <div
     class="
+      mt-6
       bg-white
       px-4
       py-3
