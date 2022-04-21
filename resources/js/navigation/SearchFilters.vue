@@ -73,17 +73,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
       isOpen: false,
-      availableFilters:{
-        amenities: Object,
-        bathrooms: Array,
-        bedrooms: Array,
-        priceRanges: Array,
-        propertyTypes: Object
-      },
       selectedFilters:{
         amenities: [],
         bathrooms: 0,
@@ -93,22 +88,30 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState({
+        availableFilters: "availableFilters",
+        storeSelectedFilters: "selectedFilters",
+    })
+  },
   methods: {
     toggle() {
       this.isOpen = !this.isOpen
     },
     updateSearch(){
-      this.$emit('update-search', this.selectedFilters)
+      this.$store.dispatch('setSelectedFilters', this.selectedFilters)
+      this.$emit('update-search')
       this.isOpen = false
+
+      if (this.$route.name != "home") {
+        this.$router.push({ name: "home" });
+      }
     }
   },
-  created() {
-    const filtersRequest = axios
-        .get('/api/filters')
-        .then(response => {
-            this.availableFilters = response.data;
-        });
-
+  mounted() {
+    if(this.storeSelectedFilters){
+      this.selectedFilters = this.storeSelectedFilters
+    }
   }
 }
 </script>

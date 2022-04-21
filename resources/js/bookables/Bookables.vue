@@ -1,6 +1,6 @@
 <template>
     <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
-        <SearchFilters v-bind="filters" v-on:update-search="updateSearch"/>
+        
         <main class="py-6 xl:flex-1 xl:overflow-x-hidden">
             <div class="px-4 xl:px-8"><h3 class="text-gray-900 text-xl">Where do you want to stay</h3><p class="text-gray-600">Probably we need some header here</p></div>
         <div v-if = "loading">
@@ -20,54 +20,23 @@
 </template>
 
 <script>
+    import { mapState } from "vuex";
     import BookableListItem from "./BookableListItem";
-    import SearchFilters from "./SearchFilters";
+    
 
     export default {
         components: {
             BookableListItem,
-            SearchFilters
         },
         data() {
             return {
-                bookables: null,
                 filters: null,
                 loading: false,
                 selectedFilters: null
             }
         },
-        methods: {
-          updateSearch(selectedFilters){
-            this.selectedFilters = selectedFilters
-                const refreshRequest = axios
-                .get('/api/bookables', {
-                  params: {
-                    search: 'search-string',
-                    bedrooms: this.selectedFilters.bedrooms,
-                    bathrooms: this.selectedFilters.bathrooms,
-                    priceRange: this.selectedFilters.priceRanges,
-                    propertyType: this.selectedFilters.propertyTypes,
-                    amenities: this.selectedFilters.amenities.join(),
-                  }
-                })
-                .then(response => {
-                    this.bookables = response.data.data;
-                    this.loading = false;
-                });
-          },
-          getBookables(){
-            this.loading = true;
-
-            const bookablesRequest = axios
-                .get('/api/bookables')
-                .then(response => {
-                    this.bookables = response.data.data;
-                    this.loading = false;
-                });
-          }
+        computed: {
+            ...mapState(['bookables'])
         },
-        created() {
-          this.getBookables()
-        }
     }
 </script>
