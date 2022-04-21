@@ -1,25 +1,20 @@
 <template>
   <div>
     <div v-show="mobile">
-      <div class="flex items-center sm:hidden">
-        <img
+      <div 
         v-if="isLoggedIn"
-          class="h-10 w-10 object-cover rounded-full border-2 border-gray-600"
-          src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80"
-          alt=""
-        />
+        class="flex items-center sm:hidden">
         <img
-        v-else
           class="h-10 w-10 object-cover rounded-full border-2 border-gray-600"
           src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&q=80"
           alt=""
         />
         <span class="ml-4 font-semibold text-gray-200 sm:hidden"
         
-          >Account Area</span
+          >Account</span
         >
       </div>
-      <div class="mt-5 sm:hidden">
+      <div class="sm:hidden">
           <router-link
           v-if="!isLoggedIn"
           :to="{ name: 'login' }"
@@ -38,7 +33,7 @@
                 <a
           v-if="isLoggedIn"
           href="#"
-          class="block text-gray-400 hover:text-white"
+          class="mt-5 block text-gray-400 hover:text-white"
           role="menuitem"
           >Profile</a
         >
