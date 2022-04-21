@@ -26,7 +26,9 @@ export default {
             propertyTypes: 0
         },
         searchString: '',
-        bookables: []
+        bookables: [],
+        page: 1,
+        pagination: [],
     },
     mutations: {
         setLastSearch(state, payload) {
@@ -58,6 +60,12 @@ export default {
         },
         setBookables(state, payload){
             state.bookables = payload
+        },
+        setPagination(state, payload){
+            state.pagination = payload
+        },
+        setPage(state, payload){
+            state.page = payload
         }
     },
     actions: {
@@ -77,18 +85,23 @@ export default {
             }
 
             const availableFilters = localStorage.getItem('availableFilters');
-            if (basket) {
+            if (availableFilters) {
                 context.commit('setAvailableFilters', JSON.parse(availableFilters));
             }
 
             const selectedFilters = localStorage.getItem('selectedFilters');
-            if (basket) {
+            if (selectedFilters) {
                 context.commit('setSelectedFilters', JSON.parse(selectedFilters));
             }
 
             const searchString = localStorage.getItem('searchString');
-            if (basket) {
+            if (searchString) {
                 context.commit('setSearchString', JSON.parse(searchString));
+            }
+
+            const currentPage = localStorage.getItem('currentPage');
+            if (currentPage) {
+                context.commit('setPage', JSON.parse(currentPage));
             }
 
             context.commit("setLoggedIn", isLoggedIn());
@@ -135,6 +148,13 @@ export default {
         },
         setBookables({ commit, state }, payload){
             commit('setBookables', payload);
+        },
+        setPagination({ commit, state }, payload){
+            commit('setPagination', payload);
+        },
+        goToPage({ commit, state }, payload){
+            commit('setPage', payload);
+            localStorage.setItem('currentPage', JSON.stringify(payload));
         },
     },
     getters: {

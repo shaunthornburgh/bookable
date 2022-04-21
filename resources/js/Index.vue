@@ -5,7 +5,7 @@
     <nav-bar @update-search="updateSearch"></nav-bar>
     <div class="xl:flex-1 xl:flex xl:overflow-y-hidden">
       <SearchFilters @update-search="updateSearch" />
-      <router-view></router-view>
+      <router-view @change-page="updatePage"></router-view>
     </div>
   </div>
 </template>
@@ -31,10 +31,18 @@ export default {
       availableFilters: "availableFilters",
       selectedFilters: "selectedFilters",
       searchString: "searchString",
+      page: "page",
     }),
   },
   methods: {
-    updateSearch() {
+    updateSearch(){
+        this.$store.dispatch("goToPage", 1);
+        this.updateBookables();
+    },
+    updatePage(){
+        this.updateBookables();
+    },
+    updateBookables() {
       const refreshRequest = axios
         .get("/api/bookables", {
           params: {
@@ -44,10 +52,12 @@ export default {
             priceRange: this.selectedFilters.priceRanges,
             propertyType: this.selectedFilters.propertyTypes,
             amenities: this.selectedFilters.amenities.join(),
+            page: this.page,
           },
         })
         .then((response) => {
           this.$store.dispatch("setBookables", response.data.data);
+          this.$store.dispatch("setPagination", response.data.meta);
           this.loading = false;
         });
 
