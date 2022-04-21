@@ -23,7 +23,8 @@ class BookableController extends Controller
             request()->input('priceRange'),
             request()->input('propertyType'),
             request()->input('amenities'),
-        )->get();
+            request()->input('search'),
+        )->paginate(12);
 
         return BookableIndexResource::collection($bookables);
     }

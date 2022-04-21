@@ -10,7 +10,25 @@ export default {
             items: []
         },
         isLoggedIn: false,
-        user: {}
+        user: {},
+        availableFilters:{
+            amenities: Object,
+            bathrooms: Array,
+            bedrooms: Array,
+            priceRanges: Array,
+            propertyTypes: Object
+        },
+        selectedFilters:{
+            amenities: [],
+            bathrooms: 0,
+            bedrooms: 0,
+            priceRanges: 0,
+            propertyTypes: 0
+        },
+        searchString: '',
+        bookables: [],
+        page: 1,
+        pagination: [],
     },
     mutations: {
         setLastSearch(state, payload) {
@@ -30,6 +48,24 @@ export default {
         },
         setLoggedIn(state, payload) {
             state.isLoggedIn = payload;
+        },
+        setAvailableFilters(state, payload){
+            state.availableFilters = payload
+        },
+        setSelectedFilters(state, payload){
+            state.selectedFilters = payload
+        },
+        setSearchString(state, payload){
+            state.searchString = payload
+        },
+        setBookables(state, payload){
+            state.bookables = payload
+        },
+        setPagination(state, payload){
+            state.pagination = payload
+        },
+        setPage(state, payload){
+            state.page = payload
         }
     },
     actions: {
@@ -46,6 +82,26 @@ export default {
             const basket = localStorage.getItem('basket');
             if (basket) {
                 context.commit('setBasket', JSON.parse(basket));
+            }
+
+            const availableFilters = localStorage.getItem('availableFilters');
+            if (availableFilters) {
+                context.commit('setAvailableFilters', JSON.parse(availableFilters));
+            }
+
+            const selectedFilters = localStorage.getItem('selectedFilters');
+            if (selectedFilters) {
+                context.commit('setSelectedFilters', JSON.parse(selectedFilters));
+            }
+
+            const searchString = localStorage.getItem('searchString');
+            if (searchString) {
+                context.commit('setSearchString', JSON.parse(searchString));
+            }
+
+            const currentPage = localStorage.getItem('currentPage');
+            if (currentPage) {
+                context.commit('setPage', JSON.parse(currentPage));
             }
 
             context.commit("setLoggedIn", isLoggedIn());
@@ -77,7 +133,29 @@ export default {
             commit("setUser", {});
             commit("setLoggedIn", false);
             logOut();
-        }
+        },
+        setAvailableFilters({ commit, state }, payload){
+            commit('setAvailableFilters', payload);
+            localStorage.setItem('availableFilters', JSON.stringify(payload));
+        },
+        setSelectedFilters({ commit, state }, payload){
+            commit('setSelectedFilters', payload);
+            localStorage.setItem('selectedFilters', JSON.stringify(payload));
+        },
+        setSearchString({ commit, state }, payload){
+            commit('setSearchString', payload);
+            localStorage.setItem('searchString', JSON.stringify(payload));
+        },
+        setBookables({ commit, state }, payload){
+            commit('setBookables', payload);
+        },
+        setPagination({ commit, state }, payload){
+            commit('setPagination', payload);
+        },
+        goToPage({ commit, state }, payload){
+            commit('setPage', payload);
+            localStorage.setItem('currentPage', JSON.stringify(payload));
+        },
     },
     getters: {
         itemsInBasket: (state) => state.basket.items.length,
