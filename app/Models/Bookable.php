@@ -58,7 +58,7 @@ class Bookable extends Model implements HasMedia
         ];
     }
 
-    public function scopeFiltered($query, $bedrooms, $bathrooms, $priceRange, $propertyType, $amenities){
+    public function scopeFiltered($query, $bedrooms, $bathrooms, $priceRange, $propertyType, $amenities, $search){
         $query
             ->when($bedrooms, function($query) use ($bedrooms){
                 $query->whereBedrooms($bedrooms);
@@ -80,6 +80,12 @@ class Bookable extends Model implements HasMedia
             ->when($amenities, function($query) use ($amenities){
                 $tags = Tag::findMany( explode(',', $amenities) );
                 $query->withAllTags($tags);
+            })
+
+            ->when($search, function($query) use ($search){
+                $query
+                    ->where('title', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%");
             });
 
         return $query;
