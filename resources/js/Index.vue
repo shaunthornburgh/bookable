@@ -35,12 +35,12 @@ export default {
     }),
   },
   methods: {
-    updateSearch(){
-        this.$store.dispatch("goToPage", 1);
-        this.updateBookables();
+    updateSearch() {
+      this.$store.dispatch("goToPage", 1);
+      this.updateBookables();
     },
-    updatePage(){
-        this.updateBookables();
+    updatePage() {
+      this.updateBookables();
     },
     updateBookables() {
       const refreshRequest = axios
@@ -60,11 +60,16 @@ export default {
           this.$store.dispatch("setPagination", response.data.meta);
           this.loading = false;
         });
-
+    },
+    loadFilters() {
+      const filtersRequest = axios.get("/api/filters").then((response) => {
+        this.$store.dispatch("setAvailableFilters", response.data);
+      });
     },
   },
   mounted() {
     this.updateSearch();
+    this.loadFilters();
   },
 };
 </script>
