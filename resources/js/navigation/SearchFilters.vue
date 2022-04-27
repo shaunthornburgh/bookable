@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-gray-800 xl:w-72">
+  <section class="bg-gray-800 xl:w-72 flex-shrink-0">
     <div class="flex justify-between px-4 py-3 xl:hidden">
       <div class="relative max-w-xs w-full">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3">

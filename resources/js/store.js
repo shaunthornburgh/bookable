@@ -135,6 +135,7 @@ export default {
             logOut();
         },
         setAvailableFilters({ commit, state }, payload){
+    
             commit('setAvailableFilters', payload);
             localStorage.setItem('availableFilters', JSON.stringify(payload));
         },
