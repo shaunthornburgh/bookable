@@ -1,6 +1,6 @@
 <template>
-<div class="max-w-7xl mx-auto px-3.5 sm:px-4 lg:px-6 mt-4">
-    <div v-if="!loading">
+<div class="mx-auto xl:px-20 sm:px-4 lg:px-6  xl:overflow-y-auto">
+    <div v-if="!loading" class="mt-4 px-10">
         <gallery :bookable-id="this.$route.params.id"></gallery>
         <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col">
             <div class="col-start-1 col-end-3 w-full">
