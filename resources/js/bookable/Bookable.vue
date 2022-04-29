@@ -8,8 +8,20 @@
                     <div class="px-4 py-5 sm:px-6">
                         <h2 id="bookable-details-title" class="text-lg leading-6 font-medium text-gray-900">{{ bookable.title }}</h2>
                     </div>
+                    <div class="px-4 pb-5 sm:px-6 flex items-baseline">
+                        <span class="inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide text-xs">{{ bookable.propertyType }}</span>
+                        <div class="ml-2 text-xs text-gray-600 font-semibold uppercase tracking-wide">
+                            {{ bookable.bedrooms }} {{ bookable.bedrooms === 1 ? 'bed' : 'beds' }} &bull; {{ bathrooms }} {{ bathrooms === 1 ? 'bath' : 'baths' }}
+                        </div>
+                        </div>
                     <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                         <p>{{ bookable.description }}</p>
+                    </div>
+                    <div v-if="bookable.amenities.length" class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Amenities</h3>
+                        <ul>
+                            <li class="mt-1 list-disc list-inside" v-for="(amenity, index) in bookable.amenities" :key="index">{{ amenity }}</li>
+                        </ul>
                     </div>
                 </div>
                 <review-list :bookable-id="this.$route.params.id"></review-list>
