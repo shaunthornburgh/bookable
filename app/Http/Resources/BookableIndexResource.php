@@ -14,6 +14,8 @@ class BookableIndexResource extends JsonResource
      */
     public function toArray($request)
     {
+        $property_types = config('bookable.propertyTypes');
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -24,6 +26,7 @@ class BookableIndexResource extends JsonResource
             'picture' => $this->getFirstMediaUrl('picture'),
             'rating' => $this->rating,
             'reviewCount' => $this->reviewCount,
+            'propertyType' => $property_types[$this->property_type],
         ];
     }
 }

@@ -9,7 +9,7 @@
     <div class="relative px-4 -mt-16">
       <div class="bg-white rounded-lg px-4 py-4 shadow-lg">
         <div class="flex items-baseline">
-          <span class="inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide text-xs">Plus</span>
+          <span class="inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide text-xs">{{ propertyType }}</span>
           <div class="ml-2 text-xs text-gray-600 font-semibold uppercase tracking-wide">
             {{ bedrooms }} {{ bedrooms === 1 ? 'bed' : 'beds' }} &bull; {{ bathrooms }} {{ bathrooms === 1 ? 'bath' : 'baths' }}
           </div>
@@ -43,6 +43,7 @@
             bathrooms: Number,
             reviewCount: Number,
             rating: Number,
+            propertyType: String,
         },
         mounted() {
 
