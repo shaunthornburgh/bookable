@@ -18,8 +18,8 @@
       <div>
         <router-link class="btn nav-button" :to="{ name: 'home' }">
           <img
-            class="block lg:block h-8 w-auto"
-            src="/images/bookable-logo.svg"
+            class="block lg:block h-9 w-auto"
+            src="/images/bookable-logo.png"
             alt="Workflow"
           />
         </router-link>
