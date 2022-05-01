@@ -37,6 +37,9 @@ export default {
   methods: {
     updateSearch() {
       this.$store.dispatch("goToPage", 1);
+      if (this.$route.name != "home") {
+        this.$router.push({ name: "home" });
+      }
       this.updateBookables();
     },
     updatePage() {

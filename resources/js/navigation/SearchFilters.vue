@@ -113,10 +113,6 @@ export default {
     updateSearchString(e){
       this.$store.dispatch('setSearchString', e.target.value)
     },
-    updateSearch(){
-      this.isOpen = false;
-      this.$emit('update-search')
-    }
   },
   mounted() {
     if(this.storeSelectedFilters){
