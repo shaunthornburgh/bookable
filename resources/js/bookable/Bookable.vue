@@ -11,7 +11,7 @@
                     <div class="px-4 pb-5 sm:px-6 flex items-baseline">
                         <span class="inline-block px-2 py-1 leading-none bg-teal-200 text-teal-800 rounded-full font-semibold uppercase tracking-wide text-xs">{{ bookable.propertyType }}</span>
                         <div class="ml-2 text-xs text-gray-600 font-semibold uppercase tracking-wide">
-                            {{ bookable.bedrooms }} {{ bookable.bedrooms === 1 ? 'bed' : 'beds' }} &bull; {{ bathrooms }} {{ bathrooms === 1 ? 'bath' : 'baths' }}
+                            {{ bookable.bedrooms }} {{ bookable.bedrooms === 1 ? 'bed' : 'beds' }} &bull; {{ bookable.bathrooms }} {{ bookable.bathrooms === 1 ? 'bath' : 'baths' }}
                         </div>
                         </div>
                     <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
