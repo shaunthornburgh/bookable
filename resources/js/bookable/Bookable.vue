@@ -1,7 +1,7 @@
 <template>
 <div class="mx-auto xl:px-20 sm:px-4 lg:px-6  xl:overflow-y-auto">
     <div v-if="!loading" class="mt-4 px-10">
-        <gallery :bookable-id="this.$route.params.id"></gallery>
+        <gallery :bookable-id="this.$route.params.id" :bookable-title="bookable.title"></gallery>
         <div class="sm:grid sm:grid-cols-3 sm:gap-2 sm:w-full sm:mb-64 mb-10 flex flex-col">
             <div class="col-start-1 col-end-3 w-full">
                 <div class="bg-white shadow sm:rounded-lg mb-7">
@@ -98,7 +98,7 @@
             return {
                 bookable: null,
                 loading: false,
-                price: null,
+                price: null
             }
         },
         created() {
