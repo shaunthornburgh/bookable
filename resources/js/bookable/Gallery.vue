@@ -11,24 +11,28 @@
             <div class="hidden sm:block sm:rounded sm:overflow-hidden sm:cursor-pointer">
                 <img class="object-cover" :src="this.images[2].path" alt="">
             </div>
-            <router-link
-                :to="{ name: 'media', params: { bookableId } }"
-                class="absolute right-5 bottom-5 inline-flex items-center justify-center pl-5 py-2 border border-solid text-sm font-semibold rounded-lg shadow-sm text-black focus:outline-none w-40 h-9"
-            >Show all photos
-            </router-link>
+            <button @click="popupIsOpen = true" class="absolute right-5 bottom-5 inline-flex items-center justify-center pl-5 py-2 border border-solid text-sm font-semibold rounded-lg shadow-sm text-black focus:outline-none w-40 h-9">Show all photos</button>
         </div>
+        <popup-gallery v-if="popupIsOpen" @close="popupIsOpen = false" :title="bookableTitle" :images="images"/>
     </div>
 </template>
 
 <script>
+    import PopupGallery from "./PopupGallery";
+
     export default {
+        components: {
+            PopupGallery
+        },
         props: {
             bookableId: [String, Number],
+            bookableTitle: String,
         },
         data() {
             return {
                 loading: false,
-                images: null
+                images: null,
+                popupIsOpen: false
             }
         },
         created() {
@@ -42,7 +46,7 @@
 </script>
 
 <style scoped>
-    a {
+    a, button {
         background: url('/images/dots.svg') 16px center no-repeat;
         background-size: 13px;
         background-color: #fff;
