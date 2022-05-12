@@ -146,7 +146,7 @@
           shadow-lg
           py-1
           bg-white
-          ring-1 ring-black ring-opacity-5
+          ring-1 ring-black ring-opacity-5 z-10
         "
         role="menu"
         aria-orientation="vertical"
